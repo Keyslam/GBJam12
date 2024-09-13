@@ -1,0 +1,24 @@
+{
+	"files.exclude": {
+		"build": false,
+		"dist": true,
+		"node_modules": true,
+		"scripts": true,
+
+		".editorconfig": true,
+		".prettierrc": true,
+		"eslint.config.mjs": true,
+		"makelove.toml": true,
+		"package-lock.json": true,
+		"package.json": false,
+		"tsconfig.json": true,
+		"tsconfig.*.json": true
+	},
+
+	"explorer.fileNesting.enabled": true,
+	"explorer.fileNesting.expand": false,
+	"explorer.fileNesting.patterns": {
+		"*.ts": "${capture}_spec.ts",
+		"*.lua": "${capture}.d.ts"
+	}
+}

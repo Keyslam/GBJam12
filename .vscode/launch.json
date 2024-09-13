@@ -1,0 +1,25 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Debug Love",
+			"type": "lua-local",
+			"request": "launch",
+			"program": {
+				"command": "love"
+			},
+			"args": ["build", "debug"],
+			"scriptRoots": ["build"]
+		},
+		{
+			"name": "Unit tests",
+			"type": "lua-local",
+			"request": "launch",
+			"program": {
+				"command": "love"
+			},
+			"args": ["build", "test"],
+			"scriptRoots": ["build"]
+		}
+	]
+}

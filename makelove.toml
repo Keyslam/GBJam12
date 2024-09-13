@@ -1,0 +1,8 @@
+name = "GBJam12"
+love_version = "11.5"
+default_targets = ["win32", "win64"]
+build_directory = "../dist"
+love_files = [
+    "+*",
+    "-*/.*",
+]

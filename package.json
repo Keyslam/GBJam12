@@ -1,0 +1,20 @@
+{
+	"scripts": {
+		"build-develop": "npm run -s clean && npm run -s prebuild -- --type develop && tstl -p tsconfig.json --watch",
+		"build-preview": "npm run -s clean && npm run -s prebuild -- --type preview && tstl -p tsconfig.preview.json & cd build && makelove --config ../makelove.toml",
+		"build-release": "npm run -s clean && npm run -s prebuild -- --type release && tstl -p tsconfig.release.json & cd build && makelove --config ../makelove.toml",
+		"clean": "rmdir build /s /q && mkdir build && cd build & mklink /J assets ..\\src\\assets",
+		"prebuild": "python scripts/prebuild.py"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.9.1",
+		"eslint": "^9.9.1",
+		"globals": "^15.9.0",
+		"love-typescript-definitions": "^11.4.3",
+		"lua-types": "^2.13.1",
+		"prettier": "3.3.3",
+		"typescript": "^5.5.2",
+		"typescript-eslint": "^8.3.0",
+		"typescript-to-lua": "^1.26.2"
+	}
+}
