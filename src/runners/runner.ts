@@ -1,3 +1,3 @@
 export interface Runner {
-    run(): void;
+	run(): void;
 }

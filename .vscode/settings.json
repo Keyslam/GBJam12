@@ -5,9 +5,9 @@
 		"node_modules": true,
 		"scripts": true,
 
-		".editorconfig": true,
-		".prettierrc": true,
-		"eslint.config.mjs": true,
+		".editorconfig": false,
+		".prettierrc": false,
+		"eslint.config.mjs": false,
 		"makelove.toml": true,
 		"package-lock.json": true,
 		"package.json": false,
@@ -20,5 +20,7 @@
 	"explorer.fileNesting.patterns": {
 		"*.ts": "${capture}_spec.ts",
 		"*.lua": "${capture}.d.ts"
-	}
+	},
+
+	"editor.formatOnSave": true,
 }

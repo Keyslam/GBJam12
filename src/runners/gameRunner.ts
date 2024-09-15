@@ -1,17 +1,32 @@
-import { VersionInfo } from "versionInfo";
+import { Context } from "context";
+import { Player } from "entities/player";
+import { Tile } from "entities/tile";
 import { Runner } from "./runner";
 
 export class Game implements Runner {
-    public run(): void {
-        love.window.setMode(1280, 720, {});
+	public run(): void {
+		io.stdout.setvbuf("no");
 
-        const image = love.graphics.newImage("assets/image.png");
+		const [width, height] = love.window.getDesktopDimensions();
+		const scaleFactor = Math.min(Math.floor(width / 160), Math.floor(height / 144)) - 2;
 
-        love.draw = () => {
-            love.graphics.draw(image, 150);
-            love.graphics.print(`Version: ${VersionInfo.major}.${VersionInfo.minor}.${VersionInfo.patch}\nCommit: ${VersionInfo.commit}\nType: ${VersionInfo.type}`);
-        };
+		love.window.setMode(scaleFactor * 160, scaleFactor * 144, {
+			resizable: true,
+		});
 
-    }
+		love.graphics.setDefaultFilter("nearest", "nearest");
+
+		const context = new Context();
+
+		context.add(new Player(context));
+		context.add(new Tile(context));
+
+		love.update = (dt) => {
+			context.update(dt);
+		};
+
+		love.draw = () => {
+			context.draw();
+		};
+	}
 }
-

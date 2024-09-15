@@ -1,6 +1,7 @@
+// @ts-ignore
+const args: string[] = arg;
+
 export const Environment = {
-    // @ts-ignore
-    IS_DEBUG = os.getenv("LOCAL_LUA_DEBUGGER_VSCODE") === "1" && (arg[2] === "debug" || arg[2] === "test"),
-    // @ts-ignore
-    IS_TEST = os.getenv("LOCAL_LUA_DEBUGGER_VSCODE") === "1" && arg[2] === "test",
-}
+	IS_DEBUG: os.getenv("LOCAL_LUA_DEBUGGER_VSCODE") === "1" && (args[2] === "debug" || args[2] === "test"),
+	IS_TEST: os.getenv("LOCAL_LUA_DEBUGGER_VSCODE") === "1" && args[2] === "test",
+};
