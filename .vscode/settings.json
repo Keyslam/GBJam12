@@ -23,4 +23,6 @@
 	},
 
 	"editor.formatOnSave": true,
+
+	"typescript.preferences.importModuleSpecifier": "relative"
 }

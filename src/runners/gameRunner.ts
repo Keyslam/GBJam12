@@ -1,6 +1,11 @@
 import { Context } from "context";
-import { Player } from "entities/player";
-import { Tile } from "entities/tile";
+import { PlayerControls } from "../components/locomation/playerControls";
+import { Actor } from "../components/physics/actor";
+import { Mass } from "../components/physics/mass";
+import { Solid } from "../components/physics/solid";
+import { Velocity } from "../components/physics/velocity";
+import { Position } from "../components/position";
+import { Sprite } from "../components/sprite";
 import { Runner } from "./runner";
 
 export class Game implements Runner {
@@ -18,8 +23,22 @@ export class Game implements Runner {
 
 		const context = new Context();
 
-		context.add(new Player(context));
-		context.add(new Tile(context));
+		context.spawnEntity((entity) => {
+			entity.addComponent(Position, new Position(entity, 24, 24));
+			entity.addComponent(Velocity, new Velocity(entity, 0, 0));
+			entity.addComponent(Mass, new Mass(entity));
+			entity.addComponent(Actor, new Actor(entity, { top: 10, left: 9, bottom: 12, right: 9 }));
+			entity.addComponent(Sprite, new Sprite(entity, love.graphics.newImage("assets/spoopyboy.png"), { x: 0, y: 0, width: 48, height: 48 }));
+			entity.addComponent(PlayerControls, new PlayerControls(entity));
+		});
+
+		for (let i = 0; i < 10; i++) {
+			context.spawnEntity((entity) => {
+				entity.addComponent(Position, new Position(entity, i * 12 + 6, 120));
+				entity.addComponent(Solid, new Solid(entity, { top: 6, left: 6, bottom: 6, right: 6 }));
+				entity.addComponent(Sprite, new Sprite(entity, love.graphics.newImage("assets/tiles.png"), { x: 24, y: 0, width: 12, height: 12 }));
+			});
+		}
 
 		love.update = (dt) => {
 			context.update(dt);

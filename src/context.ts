@@ -1,33 +1,20 @@
-import { Actor } from "entities/actor";
-import { Entity } from "entities/entity";
-import { Solid } from "entities/solid";
+import { BodyRegistry } from "./components/physics/bodyRegistry";
+import { Entity } from "./core/entity";
 
 export class Context {
 	private entities: Entity[] = [];
 
-	private actors: Actor[] = [];
-	private solids: Solid[] = [];
-
 	private canvas = love.graphics.newCanvas(160, 144);
 
-	public add(entity: Entity): void {
+	public bodyRegistry = new BodyRegistry();
+
+	public spawnEntity(builder: (entity: Entity) => void): Entity {
+		const entity = new Entity(this);
 		this.entities.push(entity);
-	}
 
-	public registerActor(actor: Actor): void {
-		this.actors.push(actor);
-	}
+		builder(entity);
 
-	public registerSolid(solid: Solid): void {
-		this.solids.push(solid);
-	}
-
-	public getAllActors(): Actor[] {
-		return this.actors;
-	}
-
-	public getAllSolids(): Solid[] {
-		return this.solids;
+		return entity;
 	}
 
 	public update(dt: number): void {
@@ -40,7 +27,8 @@ export class Context {
 
 	public draw(): void {
 		love.graphics.setCanvas(this.canvas);
-		love.graphics.clear(0, 0, 0, 0);
+		const [r, g, b, a] = love.math.colorFromBytes(17, 3, 17, 255);
+		love.graphics.clear(r, g, b, a);
 
 		love.graphics.setColor(1, 1, 1, 1);
 		for (const entity of this.entities) {
