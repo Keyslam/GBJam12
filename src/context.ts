@@ -1,3 +1,4 @@
+import { Tilemap } from "./components/map/tilemap";
 import { BodyRegistry } from "./components/physics/bodyRegistry";
 import { Entity } from "./core/entity";
 
@@ -7,6 +8,7 @@ export class Context {
 	private canvas = love.graphics.newCanvas(160, 144);
 
 	public bodyRegistry = new BodyRegistry();
+	public tilemap = new Tilemap();
 
 	public spawnEntity(builder: (entity: Entity) => void): Entity {
 		const entity = new Entity(this);
@@ -44,5 +46,18 @@ export class Context {
 		const offsetY = (height - 144 * scaleFactor) / 2;
 
 		love.graphics.draw(this.canvas, offsetX, offsetY, 0, scaleFactor, scaleFactor);
+	}
+
+	public viewportToWorld(x: number, y: number) {
+		const [width, height] = love.graphics.getDimensions();
+		const scaleFactor = Math.min(Math.floor(width / 160), Math.floor(height / 144));
+
+		const offsetX = (width - 160 * scaleFactor) / 2;
+		const offsetY = (height - 144 * scaleFactor) / 2;
+
+		return {
+			x: Math.floor(x / scaleFactor) - offsetX,
+			y: Math.floor(y / scaleFactor) - offsetY,
+		};
 	}
 }

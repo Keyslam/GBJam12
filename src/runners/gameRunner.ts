@@ -98,5 +98,11 @@ export class Game implements Runner {
 		love.draw = () => {
 			context.draw();
 		};
+
+		love.mousepressed = (x, y) => {
+			print(x, y);
+			const gamePosition = context.viewportToWorld(x, y);
+			print(gamePosition.x, gamePosition.y);
+		};
 	}
 }
