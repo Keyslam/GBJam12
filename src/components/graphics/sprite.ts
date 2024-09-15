@@ -1,7 +1,7 @@
 import { Component } from "core/component";
 import { Image, Quad } from "love.graphics";
-import { Entity } from "../core/entity";
-import { Position } from "./position";
+import { Entity } from "../../core/entity";
+import { Position } from "../position";
 
 export interface Viewport {
 	x: number;
@@ -13,9 +13,9 @@ export interface Viewport {
 export class Sprite extends Component {
 	private position = this.inject(Position);
 
-	private image: Image;
-	private viewport: Viewport | undefined;
-	private quad: Quad | undefined;
+	public image: Image;
+	public viewport: Viewport | undefined;
+	public quad: Quad | undefined;
 	public isFlipped: boolean;
 
 	constructor(entity: Entity, image: Image, viewport: Viewport | undefined = undefined, isFlipped: boolean = false) {
@@ -44,7 +44,7 @@ export class Sprite extends Component {
 		}
 	}
 
-	private rebuildQuad(): void {
+	public rebuildQuad(): void {
 		if (this.viewport === undefined) {
 			this.quad = undefined;
 			return;
