@@ -8,14 +8,6 @@ export class Tilemap {
 	}
 
 	public addTile(tile: Tilerule, x: number, y: number): void {
-		if (x % 12 !== 0) {
-			throw new Error("x must be grid aligned");
-		}
-
-		if (y % 12 !== 0) {
-			throw new Error("y must be grid aligned");
-		}
-
 		const column = this.tiles[x] ?? [];
 		this.tiles[x] = column;
 

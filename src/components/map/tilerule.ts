@@ -14,7 +14,7 @@ export class Tilerule extends Component {
 
 		this.viewports = viewports;
 
-		this.context.tilemap.addTile(this, this.position.x, this.position.y);
+		this.context.tilemap.addTile(this, (this.position.x - 6) / 12, (this.position.y - 6) / 12);
 	}
 
 	public evaluate(top: Tilerule | undefined, left: Tilerule | undefined, bottom: Tilerule | undefined, right: Tilerule | undefined): void {
