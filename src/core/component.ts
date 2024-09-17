@@ -9,7 +9,12 @@ export abstract class Component {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	public preUpdate(dt: number): void {}
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	public update(dt: number): void {}
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	public postUpdate(dt: number): void {}
+
 	public draw(): void {}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -24,5 +29,9 @@ export abstract class Component {
 
 	protected get context(): Context {
 		return this.entity.context;
+	}
+
+	protected get parent(): Entity | undefined {
+		return this.entity.parent;
 	}
 }

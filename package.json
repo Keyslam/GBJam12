@@ -3,7 +3,7 @@
 		"build-develop": "npm run -s clean && npm run -s prebuild -- --type develop && tstl -p tsconfig.json --watch",
 		"build-preview": "npm run -s clean && npm run -s prebuild -- --type preview && tstl -p tsconfig.preview.json & cd build && makelove --config ../makelove.toml",
 		"build-release": "npm run -s clean && npm run -s prebuild -- --type release && tstl -p tsconfig.release.json & cd build && makelove --config ../makelove.toml",
-		"clean": "rmdir build /s /q && mkdir build && cd build & mklink /J assets ..\\src\\assets",
+		"clean": "rmdir build /s /q && mkdir build && cd build && mklink /J assets ..\\src\\assets",
 		"prebuild": "python scripts/prebuild.py"
 	},
 	"devDependencies": {

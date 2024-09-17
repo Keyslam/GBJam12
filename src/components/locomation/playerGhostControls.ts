@@ -4,7 +4,7 @@ import { Sprite } from "../graphics/sprite";
 import { Actor } from "../physics/actor";
 import { Velocity } from "../physics/velocity";
 
-export class PlayerControls extends Component {
+export class PlayerGhostControls extends Component {
 	private velocity = this.inject(Velocity);
 	private sprite = this.inject(Sprite);
 	private animatedSprite = this.inject(AnimatedSprite);
@@ -15,15 +15,24 @@ export class PlayerControls extends Component {
 	private decelerationForce = 600;
 
 	public update(dt: number): void {
-		const isOnGround = this.actor.isOnGround();
 		const horizontalAxis = this.getHorizontalAxis();
+		const verticalAxis = this.getVerticalAxis();
 
-		if (this.shouldDecelerate(horizontalAxis, isOnGround)) {
+		if (this.shouldDecelerate(horizontalAxis, this.velocity.x)) {
 			const sign = Math.sign(this.velocity.x);
 			if (sign > 0) {
 				this.velocity.x = Math.max(0, this.velocity.x - this.decelerationForce * dt);
 			} else {
 				this.velocity.x = Math.min(0, this.velocity.x + this.decelerationForce * dt);
+			}
+		}
+
+		if (this.shouldDecelerate(verticalAxis, this.velocity.y)) {
+			const sign = Math.sign(this.velocity.y);
+			if (sign > 0) {
+				this.velocity.y = Math.max(0, this.velocity.y - this.decelerationForce * dt);
+			} else {
+				this.velocity.y = Math.min(0, this.velocity.y + this.decelerationForce * dt);
 			}
 		}
 
@@ -35,26 +44,10 @@ export class PlayerControls extends Component {
 			this.sprite.isFlipped = true;
 		}
 
-		if (love.keyboard.isDown("z") && this.actor.isOnGround()) {
-			this.velocity.y = -250;
-		}
-
-		// Animations
-
-		if (horizontalAxis !== 0 && isOnGround) {
-			this.animatedSprite.play("run");
-		}
-
-		if (horizontalAxis === 0 && isOnGround) {
-			this.animatedSprite.play("idle");
-		}
-
-		if (!isOnGround && this.velocity.y < 0) {
-			this.animatedSprite.play("jump");
-		}
-
-		if (!isOnGround && this.velocity.y >= 0) {
-			this.animatedSprite.play("fall");
+		if (verticalAxis > 0) {
+			this.velocity.y = Math.min(this.maxSpeed, this.velocity.y + this.accelerationForce * dt);
+		} else if (verticalAxis < 0) {
+			this.velocity.y = Math.max(-this.maxSpeed, this.velocity.y - this.accelerationForce * dt);
 		}
 	}
 
@@ -62,16 +55,16 @@ export class PlayerControls extends Component {
 		return (love.keyboard.isDown("left") ? -1 : 0) + (love.keyboard.isDown("right") ? 1 : 0);
 	}
 
-	private shouldDecelerate(horizontalAxis: number, isOnGround: boolean): boolean {
-		if (isOnGround === false) {
-			return false;
-		}
+	private getVerticalAxis(): number {
+		return (love.keyboard.isDown("up") ? -1 : 0) + (love.keyboard.isDown("down") ? 1 : 0);
+	}
 
-		if (horizontalAxis === 0) {
+	private shouldDecelerate(axis: number, velocity: number): boolean {
+		if (axis === 0) {
 			return true;
 		}
 
-		if (Math.sign(horizontalAxis) !== Math.sign(this.velocity.x)) {
+		if (Math.sign(axis) !== Math.sign(velocity)) {
 			return true;
 		}
 

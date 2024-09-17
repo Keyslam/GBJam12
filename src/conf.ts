@@ -6,4 +6,9 @@ love.conf = (t) => {
 
 	// @ts-ignore
 	t.window = undefined;
+
+	t.modules.physics = false;
+	t.modules.thread = false;
+	t.modules.touch = false;
+	t.modules.video = false;
 };

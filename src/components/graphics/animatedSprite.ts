@@ -7,10 +7,12 @@ export class AnimatedSprite extends Component {
 	private sprite = this.inject(Sprite);
 
 	private animations: Record<string, Animation>;
-	private activeAnimationName: string;
+	public activeAnimationName: string;
 
 	private currentFrame: number;
 	private currentDuration: number;
+
+	public didLoop: boolean;
 
 	constructor(entity: Entity, animations: Record<string, Animation>, activeAnimationName: string) {
 		super(entity);
@@ -20,12 +22,16 @@ export class AnimatedSprite extends Component {
 
 		this.currentFrame = 0;
 		this.currentDuration = 0;
+
+		this.didLoop = false;
 	}
 
 	public update(dt: number): void {
 		const activeAnimation = this.animations[this.activeAnimationName];
 
+		this.didLoop = false;
 		this.currentDuration += dt;
+
 		while (this.currentDuration >= activeAnimation.frameDuration) {
 			this.currentDuration -= activeAnimation.frameDuration;
 
@@ -33,6 +39,8 @@ export class AnimatedSprite extends Component {
 
 			this.sprite.viewport = activeAnimation.frames[this.currentFrame];
 			this.sprite.rebuildQuad();
+
+			this.didLoop = this.currentFrame === 0;
 		}
 	}
 
