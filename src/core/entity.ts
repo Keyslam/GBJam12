@@ -10,7 +10,7 @@ export class Entity {
 	private components: Component[];
 	private componentLookup: Record<string, Component>;
 
-	private dead = false;
+	public isDestroyed = false;
 
 	constructor(context: Context, parent: Entity | undefined) {
 		this.context = context;
@@ -77,7 +77,7 @@ export class Entity {
 			child.preUpdate(dt);
 		}
 
-		const deadChildren = this.children.filter((x) => x.isDead);
+		const deadChildren = this.children.filter((x) => x.isDestroyed);
 		for (const deadChild of deadChildren) {
 			this.removeChild(deadChild);
 		}
@@ -92,7 +92,7 @@ export class Entity {
 			child.update(dt);
 		}
 
-		const deadChildren = this.children.filter((x) => x.isDead);
+		const deadChildren = this.children.filter((x) => x.isDestroyed);
 		for (const deadChild of deadChildren) {
 			this.removeChild(deadChild);
 		}
@@ -107,7 +107,7 @@ export class Entity {
 			child.postUpdate(dt);
 		}
 
-		const deadChildren = this.children.filter((x) => x.isDead);
+		const deadChildren = this.children.filter((x) => x.isDestroyed);
 		for (const deadChild of deadChildren) {
 			this.removeChild(deadChild);
 		}
@@ -124,10 +124,16 @@ export class Entity {
 	}
 
 	public destroy(): void {
-		this.dead = true;
+		this.isDestroyed = true;
 	}
 
-	public get isDead(): boolean {
-		return this.dead;
+	public finalizeDestroy(): void {
+		for (const component of this.components) {
+			component.onDestroy();
+		}
+
+		for (const child of this.children) {
+			child.finalizeDestroy();
+		}
 	}
 }

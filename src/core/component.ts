@@ -2,11 +2,13 @@ import { Context } from "../context";
 import { Entity } from "./entity";
 
 export abstract class Component {
-	private entity: Entity;
+	public entity: Entity;
 
 	public constructor(entity: Entity) {
 		this.entity = entity;
 	}
+
+	public onDestroy(): void {}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	public preUpdate(dt: number): void {}

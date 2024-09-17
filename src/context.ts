@@ -1,12 +1,11 @@
-import { Editor } from "./components/map/editor";
 import { Tilemap } from "./components/map/tilemap";
 import { BodyRegistry } from "./components/physics/bodyRegistry";
-import { buildTestScreen } from "./components/scenes/buildTestScene";
+import { buildSplashScreen } from "./components/scenes/splashScreen";
 import { Entity } from "./core/entity";
 import { Input } from "./core/input";
 
 export class Context {
-	private rootEntity: Entity;
+	public rootEntity: Entity;
 
 	private canvas = love.graphics.newCanvas(160, 144);
 
@@ -16,10 +15,11 @@ export class Context {
 
 	constructor() {
 		this.rootEntity = new Entity(this, undefined);
-		this.rootEntity.addChild(buildTestScreen);
-		this.rootEntity.addChild((entity) => {
-			entity.addComponent(Editor, new Editor(entity));
-		});
+		// this.rootEntity.addChild(buildTestScreen);
+		// this.rootEntity.addChild((entity) => {
+		// 	entity.addComponent(Editor, new Editor(entity));
+		// });
+		this.rootEntity.addChild(buildSplashScreen);
 	}
 
 	public update(dt: number): void {

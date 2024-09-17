@@ -24,6 +24,10 @@ export class AnimatedSprite extends Component {
 		this.currentDuration = 0;
 
 		this.didLoop = false;
+
+		const activeAnimation = this.animations[this.activeAnimationName];
+		this.sprite.viewport = activeAnimation.frames[this.currentFrame];
+		this.sprite.rebuildQuad();
 	}
 
 	public update(dt: number): void {

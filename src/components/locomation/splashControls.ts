@@ -1,5 +1,6 @@
 import { Component } from "../../core/component";
 import { AnimatedSprite } from "../graphics/animatedSprite";
+import { buildTestScreen } from "../scenes/buildTestScene";
 
 export class SplashControls extends Component {
 	private animatedSprite = this.inject(AnimatedSprite);
@@ -16,7 +17,8 @@ export class SplashControls extends Component {
 			} else if (this.animatedSprite.activeAnimationName === "4") {
 				this.animatedSprite.play("5");
 			} else if (this.animatedSprite.activeAnimationName === "5") {
-				print("Done!");
+				this.entity.destroy();
+				this.context.rootEntity.addChild(buildTestScreen);
 			}
 		}
 	}

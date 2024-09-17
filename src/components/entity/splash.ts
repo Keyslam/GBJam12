@@ -19,7 +19,7 @@ export function buildSplash(entity: Entity) {
 				"2": createAnimation(1, 6, 160, 144, 0.08),
 				"3": createAnimation(2, 2, 160, 144, 0.1),
 				"4": createAnimation(3, 4, 160, 144, 0.06),
-				"5": createAnimation(4, 1, 160, 144, 0.1),
+				"5": createAnimation(4, 1, 160, 144, 1),
 			},
 			"1",
 		),
