@@ -27,6 +27,8 @@ export class AnimatedSprite extends Component {
 
 		const activeAnimation = this.animations[this.activeAnimationName];
 		this.sprite.viewport = activeAnimation.frames[this.currentFrame];
+		this.sprite.offsetX = activeAnimation.offsetX;
+		this.sprite.offsetY = activeAnimation.offsetY;
 		this.sprite.rebuildQuad();
 	}
 
@@ -42,6 +44,8 @@ export class AnimatedSprite extends Component {
 			this.currentFrame = (this.currentFrame + 1) % activeAnimation.frames.length;
 
 			this.sprite.viewport = activeAnimation.frames[this.currentFrame];
+			this.sprite.offsetX = activeAnimation.offsetX;
+			this.sprite.offsetY = activeAnimation.offsetY;
 			this.sprite.rebuildQuad();
 
 			this.didLoop = this.currentFrame === 0;

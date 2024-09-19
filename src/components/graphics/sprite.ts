@@ -17,13 +17,18 @@ export class Sprite extends Component {
 	public viewport: Viewport | undefined;
 	public quad: Quad | undefined;
 	public isFlipped: boolean;
+	public offsetX: number | undefined;
+	public offsetY: number | undefined;
 
-	constructor(entity: Entity, image: Image, viewport: Viewport | undefined = undefined, isFlipped: boolean = false) {
+	constructor(entity: Entity, image: Image, offsetX: number | undefined = undefined, offsetY: number | undefined = undefined, viewport: Viewport | undefined = undefined, isFlipped: boolean = false) {
 		super(entity);
 
 		this.image = image;
 		this.viewport = viewport;
 		this.isFlipped = isFlipped;
+
+		this.offsetX = offsetX;
+		this.offsetY = offsetY;
 
 		this.rebuildQuad();
 	}
@@ -32,13 +37,13 @@ export class Sprite extends Component {
 		const sx = this.isFlipped ? -1 : 1;
 
 		if (this.quad === undefined) {
-			const ox = this.image.getWidth() / 2;
-			const oy = this.image.getHeight() / 2;
+			const ox = this.offsetX ?? this.image.getWidth() / 2;
+			const oy = this.offsetY ?? this.image.getHeight() / 2;
 
 			love.graphics.draw(this.image, this.position.x, this.position.y, 0, sx, 1, ox, oy);
 		} else {
-			const ox = this.quad.getViewport()[2] / 2;
-			const oy = this.quad.getViewport()[3] / 2;
+			const ox = this.offsetX ?? this.quad.getViewport()[2] / 2;
+			const oy = this.offsetY ?? this.quad.getViewport()[3] / 2;
 
 			love.graphics.draw(this.image, this.quad, this.position.x, this.position.y, 0, sx, 1, ox, oy);
 		}

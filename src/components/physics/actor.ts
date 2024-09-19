@@ -1,9 +1,12 @@
 import { Entity } from "../../core/entity";
+import { Event } from "../../core/event";
 import { Body } from "./body";
 import { BoundingBox } from "./boundingBox";
 import { Solid } from "./solid";
 
 export class Actor extends Body {
+	public onCollision = new Event<{ normalX: number; normalY: number }>();
+
 	constructor(entity: Entity, boundingBox: BoundingBox) {
 		super(entity, "actor", boundingBox);
 	}
@@ -22,6 +25,7 @@ export class Actor extends Body {
 					this.position.x += sign;
 					move -= sign;
 				} else {
+					this.onCollision.emit({ normalX: sign, normalY: 0 });
 					return false;
 				}
 			}
@@ -44,6 +48,7 @@ export class Actor extends Body {
 					this.position.y += sign;
 					move -= sign;
 				} else {
+					this.onCollision.emit({ normalX: 0, normalY: sign });
 					return false;
 				}
 			}

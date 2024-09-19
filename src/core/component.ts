@@ -17,7 +17,9 @@ export abstract class Component {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	public postUpdate(dt: number): void {}
 
+	public preDraw(): void {}
 	public draw(): void {}
+	public postDraw(): void {}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	protected inject<T extends Component>(componentClass: new (...args: any[]) => T): T {

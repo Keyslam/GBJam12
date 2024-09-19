@@ -1,8 +1,8 @@
-class Subscription {
-	private event: Event;
-	private callback: () => void;
+class Subscription<T> {
+	private event: Event<T>;
+	private callback: (payload: T) => void;
 
-	constructor(event: Event, callback: () => void) {
+	constructor(event: Event<T>, callback: (payload: T) => void) {
 		this.event = event;
 		this.callback = callback;
 	}
@@ -11,31 +11,31 @@ class Subscription {
 		this.event.unsubscribe(this);
 	}
 
-	public emit(): void {
-		this.callback();
+	public emit(payload: T): void {
+		this.callback(payload);
 	}
 }
 
-export class Event {
-	private subscriptions: Subscription[];
+export class Event<T> {
+	private subscriptions: Subscription<T>[];
 
 	constructor() {
 		this.subscriptions = [];
 	}
 
-	public subscribe(callback: () => void) {
-		const subscription = new Subscription(this, callback);
+	public subscribe(callback: (payload: T) => void) {
+		const subscription = new Subscription<T>(this, callback);
 		this.subscriptions.push(subscription);
 	}
 
-	public unsubscribe(subscription: Subscription) {
+	public unsubscribe(subscription: Subscription<T>) {
 		this.subscriptions = this.subscriptions.filter((x) => x !== subscription);
 	}
 
-	public emit(): void {
+	public emit(payload: T): void {
 		const subscriptions = [...this.subscriptions];
 		for (const subscription of subscriptions) {
-			subscription.emit();
+			subscription.emit(payload);
 		}
 	}
 }

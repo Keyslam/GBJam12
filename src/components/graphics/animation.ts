@@ -3,9 +3,11 @@ import { Viewport } from "./sprite";
 export interface Animation {
 	frames: Viewport[];
 	frameDuration: number;
+	offsetX: number | undefined;
+	offsetY: number | undefined;
 }
 
-export const createAnimation = (row: number, frameCount: number, rowWidth: number, rowHeight: number, duration: number): Animation => {
+export const createAnimation = (row: number, frameCount: number, rowWidth: number, rowHeight: number, duration: number, offsetX: number | undefined = undefined, offsetY: number | undefined = undefined): Animation => {
 	let x = 0;
 	const y = row * rowHeight;
 
@@ -26,5 +28,7 @@ export const createAnimation = (row: number, frameCount: number, rowWidth: numbe
 	return {
 		frames: frames,
 		frameDuration: duration,
+		offsetX: offsetX,
+		offsetY: offsetY,
 	};
 };

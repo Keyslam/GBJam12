@@ -113,6 +113,16 @@ export class Entity {
 		}
 	}
 
+	public preDraw(): void {
+		for (const component of this.components) {
+			component.preDraw();
+		}
+
+		for (const child of this.children) {
+			child.preDraw();
+		}
+	}
+
 	public draw(): void {
 		for (const component of this.components) {
 			component.draw();
@@ -120,6 +130,16 @@ export class Entity {
 
 		for (const child of this.children) {
 			child.draw();
+		}
+	}
+
+	public postDraw(): void {
+		for (const component of this.components) {
+			component.postDraw();
+		}
+
+		for (const child of this.children) {
+			child.postDraw();
 		}
 	}
 
@@ -135,5 +155,15 @@ export class Entity {
 		for (const child of this.children) {
 			child.finalizeDestroy();
 		}
+	}
+
+	public findChild<T extends Component>(componentClass: new (...args: any[]) => T): Entity | undefined {
+		for (const child of this.children) {
+			if (child.tryGetComponent(componentClass) !== undefined) {
+				return child;
+			}
+		}
+
+		return undefined;
 	}
 }
