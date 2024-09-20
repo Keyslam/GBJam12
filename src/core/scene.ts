@@ -1,19 +1,17 @@
-import { Context } from "../context";
+import { Builder } from "./builder";
 import { Component } from "./component";
 import { Entity } from "./entity";
 
 export class Scene {
-	private context: Context;
 	private entities: Entity[];
 
-	constructor(context: Context) {
-		this.context = context;
+	constructor() {
 		this.entities = [];
 	}
 
-	public addEntity(entityBuilder: (entity: Entity) => void): Entity {
-		const entity = new Entity(this.context);
-		entityBuilder(entity);
+	public addEntity<TProps>(entityBuilder: Builder<TProps>, props: TProps): Entity {
+		const entity = new Entity(this);
+		entityBuilder.build(entity, props);
 
 		this.entities.push(entity);
 

@@ -1,9 +1,9 @@
-import { Context } from "../context";
 import { Component } from "./component";
+import { Scene } from "./scene";
 
 export class Entity {
-	private _context: Context;
-	/* prettier-ignore */ public get context() { return this._context; }
+	private _scene: Scene;
+	/* prettier-ignore */ public get scene() { return this._scene; }
 
 	private components: Component[];
 	private componentLookup: Record<string, Component>;
@@ -12,8 +12,8 @@ export class Entity {
 	/* prettier-ignore */ public get isDestroyed() { return this._isDestroyed; }
 	/* prettier-ignore */ private set isDestroyed(isDestroyed: boolean) { this._isDestroyed = isDestroyed; }
 
-	constructor(context: Context) {
-		this._context = context;
+	constructor(scene: Scene) {
+		this._scene = scene;
 		this._isDestroyed = false;
 
 		this.componentLookup = {};

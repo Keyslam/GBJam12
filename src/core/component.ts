@@ -1,5 +1,5 @@
-import { Context } from "../context";
 import { Entity } from "./entity";
+import { Scene } from "./scene";
 
 export abstract class Component {
 	private _entity: Entity;
@@ -29,7 +29,7 @@ export abstract class Component {
 		return this.entity.tryGetComponent(componentClass);
 	}
 
-	protected get context(): Context {
-		return this.entity.context;
+	protected get scene(): Scene {
+		return this.entity.scene;
 	}
 }

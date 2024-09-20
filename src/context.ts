@@ -1,23 +1,29 @@
+import { Scene } from "./core/scene";
+import { InputBuilder } from "./game/builders/inputBuilder";
+import { LevelLoaderBuilder } from "./game/builders/levelLoaderBuilder";
+import { TilemapBuilder } from "./game/builders/tilemapBuilder";
+import { LevelLoader } from "./game/levels/levelLoader";
+
 export class Context {
 	private canvas = love.graphics.newCanvas(160, 144);
 
-	private layer: LdtkLayer | undefined;
+	private scene: Scene;
 
 	constructor() {
-		ldtk.onLevelLoaded = (level) => {
-			print(level.id);
-		};
+		this.scene = new Scene();
 
-		ldtk.onLayer = (layer) => {
-			print(layer.id);
-			this.layer = layer;
-		};
+		this.scene.addEntity(new InputBuilder(), undefined);
+		this.scene.addEntity(new TilemapBuilder(), undefined);
+		this.scene.addEntity(new LevelLoaderBuilder(), undefined);
 
-		ldtk.load("assets/maps/test.ldtk");
-		ldtk.level("Level_0");
+		const levelLoader = this.scene.findComponent(LevelLoader);
+		levelLoader.load("Level_0");
 	}
 
-	public update(dt: number): void {}
+	public update(dt: number): void {
+		this.scene.update(dt);
+		this.scene.postUpdate(dt);
+	}
 
 	public draw(): void {
 		love.graphics.setCanvas(this.canvas);
@@ -26,11 +32,9 @@ export class Context {
 		love.graphics.clear(r, g, b, a);
 
 		love.graphics.setColor(1, 1, 1, 1);
-		// this.rootEntity.preDraw();
-		// this.rootEntity.draw();
-		// this.rootEntity.postDraw();
 
-		this.layer?.draw();
+		this.scene.draw();
+		this.scene.drawScreen();
 
 		love.graphics.setCanvas();
 

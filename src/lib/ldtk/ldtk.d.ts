@@ -17,12 +17,13 @@ declare interface LdtkLayer {
 	tiles: {
 		a: number;
 		f: number;
-		px: number;
-		py: number;
+		px: [number, number];
+		src: [number, number];
 		t: number;
 	}[];
 	intGrid: number[] | undefined;
 	id: string;
+	order: number;
 	draw: () => void;
 }
 
