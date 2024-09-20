@@ -9,8 +9,35 @@ export class Tilemap extends Component {
 	private height: number = 0;
 	private tiles: boolean[] = [];
 
+	private checkedPoints: Record<number, number> = {};
+
 	constructor(entity: Entity) {
 		super(entity);
+	}
+
+	public override draw() {
+		love.graphics.push("all");
+
+		for (const key in this.checkedPoints) {
+			const point = this.keyToCoord(tonumber(key)!);
+			const status = this.checkedPoints[key];
+
+			if (status === 1) {
+				love.graphics.setColor(0, 1, 0, 1);
+			} else if (status === 2) {
+				love.graphics.setColor(0, 0, 1, 1);
+			} else {
+				love.graphics.setColor(1, 0, 0, 1);
+			}
+
+			love.graphics.points(point.x, point.y);
+		}
+
+		love.graphics.pop();
+
+		if (love.keyboard.isDown("p")) {
+			this.checkedPoints = {};
+		}
 	}
 
 	public load(width: number, height: number, tiles: boolean[]): void {
@@ -54,5 +81,45 @@ export class Tilemap extends Component {
 		}
 
 		return true;
+	}
+
+	public findPath(startX: number, startY: number, goalX: number, goalY: number, boundingBox: BoundingBox): { x: number; y: number }[] | undefined {
+		const path = luastar.find(
+			this.width * 2,
+			this.height * 2,
+			{ x: Math.round(startX / 6), y: Math.round(startY / 6) },
+			{ x: Math.round(goalX / 6), y: Math.round(goalY / 6) },
+			(x: number, y: number) => {
+				const open = this.query(boundingBox, x * 6, y * 6);
+				const key = this.coordToKey(x * 6, y * 6);
+
+				this.checkedPoints[key] = open ? 1 : 0;
+
+				return open;
+			},
+			true,
+			false,
+		);
+
+		if (path === false) {
+			return undefined;
+		}
+
+		for (const point of path) {
+			const key = this.coordToKey(point.x * 6, point.y * 6);
+			this.checkedPoints[key] = 2;
+		}
+
+		return path;
+	}
+
+	private coordToKey(x: number, y: number): number {
+		return x + y * 1e7;
+	}
+
+	private keyToCoord(key: number): { x: number; y: number } {
+		const y = Math.floor(key / 1e7);
+		const x = key - y * 1e7;
+		return { x, y };
 	}
 }

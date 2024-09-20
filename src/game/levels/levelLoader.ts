@@ -1,5 +1,6 @@
 import { Component } from "../../core/component";
 import { Entity } from "../../core/entity";
+import { EnemyGhostBuilder } from "../builders/enemyGhostBuilder";
 import { PlayerBuilder } from "../builders/playerBuilder";
 import { Tilemap } from "../physics/tilemap";
 
@@ -7,6 +8,7 @@ export class LevelLoader extends Component {
 	private tilemap: Tilemap;
 
 	private playerBuilder = new PlayerBuilder();
+	private enemyGhostBuilder = new EnemyGhostBuilder();
 
 	private layers: LdtkLayer[] = [];
 
@@ -42,6 +44,15 @@ export class LevelLoader extends Component {
 			this.scene.addEntity(this.playerBuilder, {
 				x: entity.x,
 				y: entity.y,
+			});
+		}
+
+		if (entity.id === "EnemyGhost") {
+			this.scene.addEntity(this.enemyGhostBuilder, {
+				x: entity.x,
+				y: entity.y,
+				targetX: entity.props["Target"].cx,
+				targetY: entity.props["Target"].cy,
 			});
 		}
 	}

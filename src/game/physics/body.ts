@@ -30,21 +30,24 @@ export class Body extends Component {
 	}
 
 	public override draw() {
-		love.graphics.push("all");
-		love.graphics.setColor(1, 0, 0, 0.5);
+		const draw = true;
+		if (draw) {
+			love.graphics.push("all");
+			love.graphics.setColor(1, 0, 0, 0.5);
 
-		love.graphics.rectangle("fill", this.position.x - 0.5, this.position.y - 0.5, 2, 2);
+			love.graphics.rectangle("fill", this.position.x - 0.5, this.position.y - 0.5, 2, 2);
 
-		love.graphics.setColor(0, 0, 1, 0.5);
+			love.graphics.setColor(0, 0, 1, 0.5);
 
-		const x = this.position.x + this.boundingBox.left;
-		const y = this.position.y + this.boundingBox.top;
-		const width = this.position.x + this.boundingBox.right - x;
-		const height = this.position.y + this.boundingBox.bottom - y;
+			const x = this.position.x + this.boundingBox.left;
+			const y = this.position.y + this.boundingBox.top;
+			const width = this.position.x + this.boundingBox.right - x;
+			const height = this.position.y + this.boundingBox.bottom - y;
 
-		love.graphics.rectangle("line", x + 0.5, y + 0.5, width - 1, height - 1);
+			love.graphics.rectangle("line", x + 0.5, y + 0.5, width - 1, height - 1);
 
-		love.graphics.pop();
+			love.graphics.pop();
+		}
 	}
 
 	private moveX(amount: number): void {

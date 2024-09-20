@@ -5,7 +5,8 @@ declare interface LdtkEntity {
 	width: number;
 	height: number;
 	visible: boolean;
-	props: Record<string, unknown>;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	props: Record<string, any>;
 }
 
 declare interface LdtkLayer {
@@ -33,7 +34,8 @@ declare interface LdtkLevel {
 	worldY: number;
 	width: number;
 	height: number;
-	props: Record<string, unknown[]>;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	props: Record<string, any[]>;
 }
 
 declare namespace ldtk {
