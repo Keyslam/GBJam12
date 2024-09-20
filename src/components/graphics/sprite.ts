@@ -20,6 +20,8 @@ export class Sprite extends Component {
 	public offsetX: number | undefined;
 	public offsetY: number | undefined;
 
+	public flipX: boolean = false;
+
 	constructor(entity: Entity, image: Image, offsetX: number | undefined = undefined, offsetY: number | undefined = undefined, viewport: Viewport | undefined = undefined, isFlipped: boolean = false) {
 		super(entity);
 
@@ -34,7 +36,7 @@ export class Sprite extends Component {
 	}
 
 	public override draw(): void {
-		const sx = this.isFlipped ? -1 : 1;
+		const sx = this.isFlipped !== this.flipX ? -1 : 1;
 
 		if (this.quad === undefined) {
 			const ox = this.offsetX ?? this.image.getWidth() / 2;

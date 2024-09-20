@@ -1,5 +1,5 @@
 import { Entity } from "../../core/entity";
-import { buildPlayerBody } from "../entity/playerBody";
+import { buildEnemyGhost } from "../entity/enemyGhost";
 import { buildTile } from "../entity/tile";
 import { Camera } from "../locomation/camera";
 import { Position } from "../position";
@@ -12,7 +12,9 @@ export function buildTestScreen(entity: Entity) {
 		})
 		.getComponent(Camera)!;
 
-	const body = entity.addChild((entity) => buildPlayerBody(entity, 24, 24));
+	// const body = entity.addChild((entity) => buildPlayerBody(entity, 24, 24));
+
+	const body = entity.addChild((entity) => buildEnemyGhost(entity, 24, 24, false));
 
 	camera.target = body;
 
@@ -21,10 +23,12 @@ export function buildTestScreen(entity: Entity) {
 	}
 
 	for (let x = 10; x < 15; x++) {
-		entity.addChild((entity) => buildTile(entity, x, 9));
+		entity.addChild((entity) => buildTile(entity, x, 11));
 	}
 
 	for (let x = 15; x < 20; x++) {
-		entity.addChild((entity) => buildTile(entity, x, 15));
+		entity.addChild((entity) => buildTile(entity, x, 17));
 	}
+
+	entity.addChild((entity) => buildTile(entity, 6, 9));
 }

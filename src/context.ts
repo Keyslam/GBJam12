@@ -1,4 +1,3 @@
-import { Editor } from "./components/map/editor";
 import { Tilemap } from "./components/map/tilemap";
 import { BodyRegistry } from "./components/physics/bodyRegistry";
 import { buildTestScreen } from "./components/scenes/buildTestScene";
@@ -17,9 +16,9 @@ export class Context {
 	constructor() {
 		this.rootEntity = new Entity(this, undefined);
 		this.rootEntity.addChild(buildTestScreen);
-		this.rootEntity.addChild((entity) => {
-			entity.addComponent(Editor, new Editor(entity));
-		});
+		// this.rootEntity.addChild((entity) => {
+		// 	entity.addComponent(Editor, new Editor(entity));
+		// });
 
 		// this.rootEntity.addChild(buildSplashScreen);
 	}
@@ -41,9 +40,9 @@ export class Context {
 		love.graphics.clear(r, g, b, a);
 
 		love.graphics.setColor(1, 1, 1, 1);
-		this.rootEntity.preDraw();
+		// this.rootEntity.preDraw();
 		this.rootEntity.draw();
-		this.rootEntity.postDraw();
+		// this.rootEntity.postDraw();
 
 		love.graphics.setCanvas();
 
