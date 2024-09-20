@@ -2,21 +2,19 @@ import { Context } from "../context";
 import { Component } from "./component";
 
 export class Entity {
-	public parent: Entity | undefined;
-	public children: Entity[];
-
-	public context: Context;
+	private _context: Context;
+	/* prettier-ignore */ public get context() { return this._context; }
 
 	private components: Component[];
 	private componentLookup: Record<string, Component>;
 
-	public isDestroyed = false;
+	private _isDestroyed;
+	/* prettier-ignore */ public get isDestroyed() { return this._isDestroyed; }
+	/* prettier-ignore */ private set isDestroyed(isDestroyed: boolean) { this._isDestroyed = isDestroyed; }
 
-	constructor(context: Context, parent: Entity | undefined) {
-		this.context = context;
-
-		this.parent = parent;
-		this.children = [];
+	constructor(context: Context) {
+		this._context = context;
+		this._isDestroyed = false;
 
 		this.componentLookup = {};
 		this.components = [];
@@ -55,46 +53,9 @@ export class Entity {
 		return component as unknown as T;
 	}
 
-	public addChild(entityBuilder: (entity: Entity) => void): Entity {
-		const entity = new Entity(this.context, this);
-		entityBuilder(entity);
-
-		this.children.push(entity);
-
-		return entity;
-	}
-
-	public removeChild(child: Entity): void {
-		this.children = this.children.filter((x) => x !== child);
-	}
-
-	public preUpdate(dt: number): void {
-		for (const component of this.components) {
-			component.preUpdate(dt);
-		}
-
-		for (const child of this.children) {
-			child.preUpdate(dt);
-		}
-
-		const deadChildren = this.children.filter((x) => x.isDestroyed);
-		for (const deadChild of deadChildren) {
-			this.removeChild(deadChild);
-		}
-	}
-
 	public update(dt: number): void {
 		for (const component of this.components) {
 			component.update(dt);
-		}
-
-		for (const child of this.children) {
-			child.update(dt);
-		}
-
-		const deadChildren = this.children.filter((x) => x.isDestroyed);
-		for (const deadChild of deadChildren) {
-			this.removeChild(deadChild);
 		}
 	}
 
@@ -102,68 +63,25 @@ export class Entity {
 		for (const component of this.components) {
 			component.postUpdate(dt);
 		}
-
-		for (const child of this.children) {
-			child.postUpdate(dt);
-		}
-
-		const deadChildren = this.children.filter((x) => x.isDestroyed);
-		for (const deadChild of deadChildren) {
-			this.removeChild(deadChild);
-		}
-	}
-
-	public preDraw(): void {
-		for (const component of this.components) {
-			component.preDraw();
-		}
-
-		for (const child of this.children) {
-			child.preDraw();
-		}
 	}
 
 	public draw(): void {
 		for (const component of this.components) {
 			component.draw();
 		}
-
-		for (const child of this.children) {
-			child.draw();
-		}
 	}
 
-	public postDraw(): void {
+	public drawScreen(): void {
 		for (const component of this.components) {
-			component.postDraw();
-		}
-
-		for (const child of this.children) {
-			child.postDraw();
+			component.drawScreen();
 		}
 	}
 
 	public destroy(): void {
 		this.isDestroyed = true;
-	}
 
-	public finalizeDestroy(): void {
 		for (const component of this.components) {
 			component.onDestroy();
 		}
-
-		for (const child of this.children) {
-			child.finalizeDestroy();
-		}
-	}
-
-	public findChild<T extends Component>(componentClass: new (...args: any[]) => T): Entity | undefined {
-		for (const child of this.children) {
-			if (child.tryGetComponent(componentClass) !== undefined) {
-				return child;
-			}
-		}
-
-		return undefined;
 	}
 }

@@ -1,37 +1,23 @@
-import { Tilemap } from "./components/map/tilemap";
-import { BodyRegistry } from "./components/physics/bodyRegistry";
-import { buildTestScreen } from "./components/scenes/buildTestScene";
-import { Entity } from "./core/entity";
-import { Input } from "./core/input";
-
 export class Context {
-	public rootEntity: Entity;
-
 	private canvas = love.graphics.newCanvas(160, 144);
 
-	public bodyRegistry = new BodyRegistry();
-	public tilemap = new Tilemap();
-	public input = new Input(this);
+	private layer: LdtkLayer | undefined;
 
 	constructor() {
-		this.rootEntity = new Entity(this, undefined);
-		this.rootEntity.addChild(buildTestScreen);
-		// this.rootEntity.addChild((entity) => {
-		// 	entity.addComponent(Editor, new Editor(entity));
-		// });
+		ldtk.onLevelLoaded = (level) => {
+			print(level.id);
+		};
 
-		// this.rootEntity.addChild(buildSplashScreen);
+		ldtk.onLayer = (layer) => {
+			print(layer.id);
+			this.layer = layer;
+		};
+
+		ldtk.load("assets/maps/test.ldtk");
+		ldtk.level("Level_0");
 	}
 
-	public update(dt: number): void {
-		this.input.update();
-
-		this.rootEntity.preUpdate(dt);
-		this.rootEntity.update(dt);
-		this.rootEntity.postUpdate(dt);
-
-		this.input.postUpdate();
-	}
+	public update(dt: number): void {}
 
 	public draw(): void {
 		love.graphics.setCanvas(this.canvas);
@@ -41,8 +27,10 @@ export class Context {
 
 		love.graphics.setColor(1, 1, 1, 1);
 		// this.rootEntity.preDraw();
-		this.rootEntity.draw();
+		// this.rootEntity.draw();
 		// this.rootEntity.postDraw();
+
+		this.layer?.draw();
 
 		love.graphics.setCanvas();
 
@@ -56,7 +44,7 @@ export class Context {
 	}
 
 	public mousepressed(x: number, y: number, button: number): void {
-		this.input.mousepressed(button);
+		// this.input.mousepressed(button);
 	}
 
 	public viewportToWorld(x: number, y: number): { x: number; y: number } {

@@ -2,6 +2,8 @@ import { Environment } from "environment";
 import { Game } from "runners/gameRunner";
 import { TestRunner } from "runners/testRunner";
 
+_G.ldtk = require("lib/ldtk/ldtk");
+
 if (Environment.IS_DEBUG) {
 	require("lldebugger").start();
 }

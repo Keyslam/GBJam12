@@ -2,24 +2,22 @@ import { Context } from "../context";
 import { Entity } from "./entity";
 
 export abstract class Component {
-	public entity: Entity;
+	private _entity: Entity;
+	/* prettier-ignore */ public get entity() { return this._entity; }
 
 	public constructor(entity: Entity) {
-		this.entity = entity;
+		this._entity = entity;
 	}
 
 	public onDestroy(): void {}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	public preUpdate(dt: number): void {}
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	public update(dt: number): void {}
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	public postUpdate(dt: number): void {}
 
-	public preDraw(): void {}
 	public draw(): void {}
-	public postDraw(): void {}
+	public drawScreen(): void {}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	protected inject<T extends Component>(componentClass: new (...args: any[]) => T): T {
@@ -33,9 +31,5 @@ export abstract class Component {
 
 	protected get context(): Context {
 		return this.entity.context;
-	}
-
-	protected get parent(): Entity | undefined {
-		return this.entity.parent;
 	}
 }
