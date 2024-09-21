@@ -33,12 +33,12 @@ export class Body extends Component {
 	}
 
 	public override draw() {
-		const draw = true;
+		const draw = false;
 		if (draw) {
 			love.graphics.push("all");
 			love.graphics.setColor(1, 0, 0, 0.5);
 
-			// love.graphics.rectangle("fill", this.position.x - 0.5, this.position.y - 0.5, 2, 2);
+			love.graphics.rectangle("fill", this.position.x - 0.5, this.position.y - 0.5, 2, 2);
 
 			love.graphics.setColor(0, 0, 1, 0.5);
 
@@ -47,7 +47,7 @@ export class Body extends Component {
 			const width = this.position.x + this.boundingBox.right - x;
 			const height = this.position.y + this.boundingBox.bottom - y;
 
-			// love.graphics.rectangle("line", x + 0.5, y + 0.5, width - 1, height - 1);
+			love.graphics.rectangle("line", x + 0.5, y + 0.5, width - 1, height - 1);
 
 			love.graphics.pop();
 		}

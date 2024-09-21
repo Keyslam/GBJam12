@@ -1,14 +1,17 @@
 import { Scene } from "./core/scene";
+import { CameraBuilder } from "./game/builders/cameraBuilder";
 import { InputBuilder } from "./game/builders/inputBuilder";
 import { LevelLoaderBuilder } from "./game/builders/levelLoaderBuilder";
 import { SchedulerBuilder } from "./game/builders/schedulerBuilder";
 import { TilemapBuilder } from "./game/builders/tilemapBuilder";
 import { LevelLoader } from "./game/levels/levelLoader";
+import { Camera } from "./game/rendering/camera";
 
 export class Context {
 	private canvas = love.graphics.newCanvas(160, 144);
 
 	private scene: Scene;
+	private camera: Camera;
 
 	constructor() {
 		this.scene = new Scene();
@@ -17,6 +20,12 @@ export class Context {
 		this.scene.addEntity(new InputBuilder(), undefined);
 		this.scene.addEntity(new TilemapBuilder(), undefined);
 		this.scene.addEntity(new LevelLoaderBuilder(), undefined);
+		this.camera = this.scene
+			.addEntity(new CameraBuilder(), {
+				x: 80,
+				y: 72,
+			})
+			.getComponent(Camera);
 
 		const levelLoader = this.scene.findComponent(LevelLoader);
 		levelLoader.load("Level_0");
@@ -35,7 +44,10 @@ export class Context {
 
 		love.graphics.setColor(1, 1, 1, 1);
 
+		this.camera.attach();
 		this.scene.draw();
+		this.camera.detach();
+
 		this.scene.drawScreen();
 
 		love.graphics.setCanvas();

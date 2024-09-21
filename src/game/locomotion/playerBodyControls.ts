@@ -1,6 +1,7 @@
 import { Component } from "../../core/component";
 import { Entity } from "../../core/entity";
 import { Scheduler } from "../../core/scheduler";
+import { PlayerGhostSpawnBuiler } from "../builders/playerGhostSpawnBuilder";
 import { Position } from "../common/position";
 import { Input } from "../input/input";
 import { Body } from "../physics/body";
@@ -79,6 +80,12 @@ export class PlayerBodyControls extends Component {
 				this.velocity.y = 0;
 
 				this.state = "inanimate";
+
+				this.scene.addEntity(new PlayerGhostSpawnBuiler(), {
+					x: this.position.x,
+					y: this.position.y,
+					flipped: this.spriteRenderer.isFlipped,
+				});
 			}
 
 			// Animations
@@ -103,7 +110,7 @@ export class PlayerBodyControls extends Component {
 
 			this.scene
 				.findComponent(Scheduler)
-				.waitForSeconds(1)
+				.waitForSeconds(5)
 				.then(() => {
 					this.state = "possessed";
 					this.lastHeight = this.position.y;
