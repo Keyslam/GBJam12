@@ -22,7 +22,7 @@ export class EnemyGhostControls extends Component {
 		this.playerBody = playerBody;
 	}
 
-	public override update(dt: number): void {
+	public override postUpdate(dt: number): void {
 		if (this.playerBody.state !== "inanimate") {
 			return;
 		}

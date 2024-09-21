@@ -2,6 +2,7 @@ import { Component } from "../../core/component";
 import { Entity } from "../../core/entity";
 import { Position } from "../common/position";
 import { Input } from "../input/input";
+import { Body } from "../physics/body";
 import { Velocity } from "../physics/velocity";
 import { AnimatedSprite } from "../rendering/animatedSprite";
 import { Camera } from "../rendering/camera";
@@ -16,6 +17,7 @@ export class PlayerGhostControls extends Component {
 	private spriteRenderer = this.inject(SpriteRenderer);
 	private animatedSprite = this.inject(AnimatedSprite);
 	private velocity = this.inject(Velocity);
+	private body = this.inject(Body);
 
 	private accelerationForce = 600;
 	private maxSpeed = 70;
@@ -33,6 +35,8 @@ export class PlayerGhostControls extends Component {
 	}
 
 	public override update(dt: number): void {
+		this.body.ignoreOneWay = true;
+
 		if (this.state === "controlled") {
 			const horizontalInput = (this.input.buttonLeftState.isDown ? -1 : 0) + (this.input.buttonRightState.isDown ? 1 : 0);
 			const verticalInput = (this.input.buttonUpState.isDown ? -1 : 0) + (this.input.buttonDownState.isDown ? 1 : 0);

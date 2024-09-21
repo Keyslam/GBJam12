@@ -81,6 +81,10 @@ export class Tilemap extends Component {
 		this.tiles = tiles;
 	}
 
+	public getTile(key: number): Tile {
+		return this.tiles[key];
+	}
+
 	// public isSolid(x: number, y: number): boolean {
 	// 	const tileX = Math.floor(x / this.tileSize);
 	// 	const tileY = Math.floor(y / this.tileSize);
@@ -155,7 +159,7 @@ export class Tilemap extends Component {
 
 				return open;
 			},
-			true,
+			false,
 			false,
 		);
 

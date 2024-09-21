@@ -70,6 +70,17 @@ export class Scene {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public tryFindChildByComponent<T extends Component>(componentClass: new (...args: any[]) => T): Entity | undefined {
+		for (const entity of this.entities) {
+			if (entity.tryGetComponent(componentClass) !== undefined) {
+				return entity;
+			}
+		}
+
+		return undefined;
+	}
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public findComponent<T extends Component>(componentClass: new (...args: any[]) => T): T {
 		for (const entity of this.entities) {
 			const component = entity.tryGetComponent(componentClass);

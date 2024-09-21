@@ -15,30 +15,75 @@
 		"Props.png"
 	],
 	"entities": {
+		"EnemyGhost": [
+			{
+				"id": "EnemyGhost",
+				"iid": "1e874d20-73f0-11ef-83e4-831d39f23c62",
+				"layer": "Entities",
+				"x": 266,
+				"y": 52,
+				"width": 20,
+				"height": 20,
+				"color": 15349948,
+				"customFields" : {}
+			}
+		],
+		"Trapdoor_Left": [
+			{
+				"id": "Trapdoor_Left",
+				"iid": "6463f580-73f0-11ef-83e4-054e22135292",
+				"layer": "Entities",
+				"x": 96,
+				"y": 84,
+				"width": 12,
+				"height": 24,
+				"color": 15389866,
+				"customFields": {
+					"Id": 1
+				}
+			}
+		],
+		"Trapdoor_Right": [
+			{
+				"id": "Trapdoor_Right",
+				"iid": "9c93a810-73f0-11ef-83e4-037cc19a8aac",
+				"layer": "Entities",
+				"x": 120,
+				"y": 84,
+				"width": 12,
+				"height": 24,
+				"color": 14984818,
+				"customFields": {
+					"Id": 1
+				}
+			}
+		],
 		"Player": [
 			{
 				"id": "Player",
 				"iid": "2087d390-73f0-11ef-a3d5-9d98c06e290a",
 				"layer": "Entities",
-				"x": 26,
-				"y": 160,
+				"x": 186,
+				"y": 29,
 				"width": 24,
 				"height": 24,
 				"color": 12470831,
 				"customFields" : {}
 			}
 		],
-		"EnemyGhost": [
+		"Switch": [
 			{
-				"id": "EnemyGhost",
-				"iid": "1e874d20-73f0-11ef-83e4-831d39f23c62",
+				"id": "Switch",
+				"iid": "a40157d0-73f0-11ef-83e4-cdf261739c17",
 				"layer": "Entities",
-				"x": 190,
-				"y": 177,
-				"width": 20,
-				"height": 20,
-				"color": 15349948,
-				"customFields" : {}
+				"x": 144,
+				"y": 60,
+				"width": 12,
+				"height": 12,
+				"color": 14120515,
+				"customFields": {
+					"Id": 1
+				}
 			}
 		]
 	}

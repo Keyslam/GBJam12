@@ -2,15 +2,22 @@ import { Component } from "../../core/component";
 import { Entity } from "../../core/entity";
 import { EnemyGhostBuilder } from "../builders/enemyGhostBuilder";
 import { PlayerBuilder } from "../builders/playerBuilder";
+import { SwitchBuilder } from "../builders/switchBuilder";
+import { TrapdoorBuilder } from "../builders/trapdoorBuilder";
 import { PlayerBodyControls } from "../locomotion/playerBodyControls";
 import { Tile, Tilemap } from "../physics/tilemap";
 import { Camera } from "../rendering/camera";
+import { SignalStore } from "../signals/signalStore";
 
 export class LevelLoader extends Component {
+	private signalStore = this.scene.findComponent(SignalStore);
+
 	private tilemap: Tilemap;
 
 	private playerBuilder = new PlayerBuilder();
 	private enemyGhostBuilder = new EnemyGhostBuilder();
+	private trapdoorBuilder = new TrapdoorBuilder();
+	private switchBuilder = new SwitchBuilder();
 
 	private layers: LdtkLayer[] = [];
 	private entities: LdtkEntity[] = [];
@@ -58,10 +65,19 @@ export class LevelLoader extends Component {
 			})
 			.getComponent(PlayerBodyControls);
 
+		const width = math.ceil(level.width / 12);
+		const height = math.ceil(level.height / 12);
+
+		const tiles: Tile[] = [];
+
 		for (const entity of this.entities) {
 			if (entity.id === "Player") {
 				continue;
 			}
+
+			let bb: { x: number; y: number; w: number; h: number } | undefined = undefined;
+			const kxo = 0;
+			let kyo = 0;
 
 			if (entity.id === "EnemyGhost") {
 				this.scene.addEntity(this.enemyGhostBuilder, {
@@ -71,12 +87,45 @@ export class LevelLoader extends Component {
 					playerBody: playerBody,
 				});
 			}
+
+			if (entity.id === "Switch") {
+				const signalId = entity.props["Id"];
+				this.signalStore.registerSignal(signalId);
+
+				this.scene.addEntity(this.switchBuilder, {
+					x: entity.x,
+					y: entity.y,
+					signalId: signalId,
+				});
+			}
+
+			if (entity.id === "Trapdoor_Left" || entity.id === "Trapdoor_Right") {
+				const signalId = entity.props["Id"];
+				this.signalStore.registerSignal(signalId);
+
+				this.scene.addEntity(this.trapdoorBuilder, {
+					x: entity.x,
+					y: entity.y,
+					signalId: signalId,
+					key: entity.x / 12 + (entity.y / 12 + 1) * width,
+					flipped: entity.id === "Trapdoor_Right",
+				});
+
+				bb = { x: 0, y: 0, w: 12, h: 5 };
+				kyo = 1;
+			}
+
+			if (bb) {
+				const x = entity.x / 12;
+				const y = entity.y / 12;
+
+				const key = x + kxo + (y + kyo) * width;
+				tiles[key] = {
+					boundingBox: { left: bb.x, top: bb.y, right: bb.x + bb.w, bottom: bb.y + bb.h },
+					state: "solid",
+				};
+			}
 		}
-
-		const width = math.ceil(level.width / 12);
-		const height = math.ceil(level.height / 12);
-
-		const tiles: Tile[] = [];
 
 		for (const layer of this.layers) {
 			if (layer.id === "Props") {

@@ -242,7 +242,7 @@ export class PlayerBodyControls extends Component {
 
 			if (payload.y !== 0) {
 				const distanceFallen = this.position.y - this.lastHeight;
-				if (distanceFallen > 6) {
+				if (distanceFallen > 12) {
 					this.state = "tripped";
 					this.velocity.x = 0;
 

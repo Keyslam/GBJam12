@@ -3,6 +3,7 @@ import { CameraBuilder } from "./game/builders/cameraBuilder";
 import { InputBuilder } from "./game/builders/inputBuilder";
 import { LevelLoaderBuilder } from "./game/builders/levelLoaderBuilder";
 import { SchedulerBuilder } from "./game/builders/schedulerBuilder";
+import { SignalStoreBuilder } from "./game/builders/signalStoreBuilder";
 import { TilemapBuilder } from "./game/builders/tilemapBuilder";
 import { LevelLoader } from "./game/levels/levelLoader";
 import { Camera } from "./game/rendering/camera";
@@ -18,6 +19,7 @@ export class Context {
 
 		this.scene.addEntity(new SchedulerBuilder(), undefined);
 		this.scene.addEntity(new InputBuilder(), undefined);
+		this.scene.addEntity(new SignalStoreBuilder(), undefined);
 		this.scene.addEntity(new TilemapBuilder(), undefined);
 		this.scene.addEntity(new LevelLoaderBuilder(), undefined);
 		this.camera = this.scene
@@ -28,6 +30,7 @@ export class Context {
 			.getComponent(Camera);
 
 		const levelLoader = this.scene.findComponent(LevelLoader);
+
 		levelLoader.load("Level_0");
 	}
 
