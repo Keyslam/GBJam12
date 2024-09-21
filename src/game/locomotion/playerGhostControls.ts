@@ -23,7 +23,7 @@ export class PlayerGhostControls extends Component {
 
 	private state: "controlled" | "possessing" = "controlled";
 
-	private possessDistance = 20;
+	private possessDistance = 12;
 	private playerBody: PlayerBodyControls;
 
 	constructor(entity: Entity, playerBody: PlayerBodyControls) {

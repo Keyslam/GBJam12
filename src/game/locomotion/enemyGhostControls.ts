@@ -13,7 +13,7 @@ export class EnemyGhostControls extends Component {
 	private body = this.inject(Body);
 	private spriteRenderer = this.inject(SpriteRenderer);
 
-	private possessDistance = 20;
+	private possessDistance = 25;
 	private playerBody: PlayerBodyControls;
 
 	constructor(entity: Entity, playerBody: PlayerBodyControls) {

@@ -3,7 +3,7 @@ import { Entity } from "../../core/entity";
 import { EnemyGhostBuilder } from "../builders/enemyGhostBuilder";
 import { PlayerBuilder } from "../builders/playerBuilder";
 import { PlayerBodyControls } from "../locomotion/playerBodyControls";
-import { Tilemap } from "../physics/tilemap";
+import { Tile, Tilemap } from "../physics/tilemap";
 import { Camera } from "../rendering/camera";
 
 export class LevelLoader extends Component {
@@ -76,25 +76,66 @@ export class LevelLoader extends Component {
 		const width = math.ceil(level.width / 12);
 		const height = math.ceil(level.height / 12);
 
-		const tiles: boolean[] = [];
-		for (let x = 0; x < width; x++) {
-			for (let y = 0; y < height; y++) {
-				const key = x + y * width;
-				tiles[key] = false;
-			}
-		}
+		const tiles: Tile[] = [];
 
 		for (const layer of this.layers) {
-			if (layer.id === "Decor") {
-				continue;
-			}
+			if (layer.id === "Props") {
+				for (const tile of layer.tiles) {
+					const id = tile.t;
 
-			for (const tile of layer.tiles) {
-				const x = tile.px[0] / 12;
-				const y = tile.px[1] / 12;
+					let bb: { x: number; y: number; w: number; h: number } | undefined = undefined;
 
-				const key = x + y * width;
-				tiles[key] = true;
+					{
+						// Book shelf
+						if (id === 186 || id === 187) {
+							bb = { x: 0, y: 9, w: 12, h: 3 };
+						}
+					}
+
+					{
+						// One-way platform
+						if (id === 16) {
+							bb = { x: 0, y: 0, w: 12, h: 5 };
+						}
+					}
+
+					{
+						// Furnace
+						if (id === 210) {
+							bb = { x: 10, y: 4, w: 2, h: 3 };
+						}
+
+						if (id === 211 || id === 212 || id === 213 || id === 214) {
+							bb = { x: 0, y: 4, w: 12, h: 3 };
+						}
+
+						if (id === 215) {
+							bb = { x: 0, y: 4, w: 2, h: 3 };
+						}
+					}
+
+					if (bb) {
+						const x = tile.px[0] / 12;
+						const y = tile.px[1] / 12;
+
+						const key = x + y * width;
+						tiles[key] = {
+							boundingBox: { left: bb.x, top: bb.y, right: bb.x + bb.w, bottom: bb.y + bb.h },
+							state: "one-way",
+						};
+					}
+				}
+			} else {
+				for (const tile of layer.tiles) {
+					const x = tile.px[0] / 12;
+					const y = tile.px[1] / 12;
+
+					const key = x + y * width;
+					tiles[key] = {
+						boundingBox: { left: 0, top: 0, right: 12, bottom: 12 },
+						state: "solid",
+					};
+				}
 			}
 		}
 

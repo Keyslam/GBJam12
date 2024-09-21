@@ -21,6 +21,10 @@ export class Body extends Component {
 
 	public onCollision = new Event<{ x: number; y: number }>();
 
+	private _ignoreOneWay: boolean = false;
+	/* prettier-ignore */ public get ignoreOneWay() { return this._ignoreOneWay; }
+	/* prettier-ignore */ public set ignoreOneWay(ignoreOneWay: boolean) { this._ignoreOneWay = ignoreOneWay; }
+
 	constructor(entity: Entity, boundingBox: BoundingBox) {
 		super(entity);
 
@@ -33,7 +37,7 @@ export class Body extends Component {
 	}
 
 	public override draw() {
-		const draw = true;
+		const draw = false;
 		if (draw) {
 			love.graphics.push("all");
 			love.graphics.setColor(1, 0, 0, 0.5);
@@ -65,7 +69,7 @@ export class Body extends Component {
 			while (moveX !== 0) {
 				const targetX = this.position.x + sign;
 
-				const canMove = this.tileMap.query(this.boundingBox, targetX, this.position.y);
+				const canMove = this.tileMap.query(this.boundingBox, targetX, this.position.y, this.ignoreOneWay || this.velocity.y < 0);
 				if (canMove) {
 					this.position.x = targetX;
 					moveX -= sign;
@@ -90,7 +94,7 @@ export class Body extends Component {
 			while (moveY !== 0) {
 				const targetY = this.position.y + sign;
 
-				const canMove = this.tileMap.query(this.boundingBox, this.position.x, targetY);
+				const canMove = this.tileMap.query(this.boundingBox, this.position.x, targetY, this.ignoreOneWay || this.velocity.y < 0);
 				if (canMove) {
 					this.position.y = targetY;
 					moveY -= sign;

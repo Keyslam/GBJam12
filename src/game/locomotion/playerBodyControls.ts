@@ -63,7 +63,7 @@ export class PlayerBodyControls extends Component {
 	private accelerationForce = 600;
 	private maxSpeed = 70;
 	private decelerationForce = 600;
-	private jumpForce = 250;
+	private jumpForce = 260;
 
 	private possessedAccelerationForce = 400;
 	private possessedMaxSpeed = 15;
@@ -80,6 +80,8 @@ export class PlayerBodyControls extends Component {
 	}
 
 	public override update(dt: number): void {
+		this.body.ignoreOneWay = false;
+
 		if (this.state === "controlled") {
 			const horizontalInput = (this.input.buttonLeftState.isDown ? -1 : 0) + (this.input.buttonRightState.isDown ? 1 : 0);
 
@@ -123,6 +125,10 @@ export class PlayerBodyControls extends Component {
 						playerBody: this,
 					});
 				}
+			}
+
+			if (this.input.buttonDownState.isDown) {
+				this.body.ignoreOneWay = true;
 			}
 
 			// Animations

@@ -3,7 +3,7 @@
 	"uniqueIdentifer": "3e85c7d0-73f0-11ef-a3d5-afb8b76df7ab",
 	"x": 0,
 	"y": -72,
-	"width": 316,
+	"width": 604,
 	"height": 216,
 	"bgColor": "#696A79",
 	"neighbourLevels": [],
@@ -12,7 +12,7 @@
 		"Walls_Autolayer.png",
 		"Walls_Foreground_Autolayer.png",
 		"Manual_Tiles.png",
-		"Decor.png"
+		"Props.png"
 	],
 	"entities": {
 		"Player": [
@@ -20,10 +20,10 @@
 				"id": "Player",
 				"iid": "2087d390-73f0-11ef-a3d5-9d98c06e290a",
 				"layer": "Entities",
-				"x": 16,
-				"y": 187,
-				"width": 12,
-				"height": 22,
+				"x": 26,
+				"y": 160,
+				"width": 24,
+				"height": 24,
 				"color": 12470831,
 				"customFields" : {}
 			}
@@ -31,10 +31,10 @@
 		"EnemyGhost": [
 			{
 				"id": "EnemyGhost",
-				"iid": "0308e760-73f0-11ef-83e4-09701e3f6983",
+				"iid": "1e874d20-73f0-11ef-83e4-831d39f23c62",
 				"layer": "Entities",
-				"x": 144,
-				"y": 168,
+				"x": 190,
+				"y": 177,
 				"width": 20,
 				"height": 20,
 				"color": 15349948,

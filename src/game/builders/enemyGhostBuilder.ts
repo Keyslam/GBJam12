@@ -31,10 +31,10 @@ export class EnemyGhostBuilder extends Builder<EnemyGhostProps> {
 		entity.addComponent(
 			Body,
 			new Body(entity, {
-				top: -10,
+				top: -11,
 				bottom: 10,
-				left: -7,
-				right: 7,
+				left: -8,
+				right: 8,
 			}),
 		);
 		entity.addComponent(AnimatedSprite, new AnimatedSprite(entity, this.animations, "idle"));
