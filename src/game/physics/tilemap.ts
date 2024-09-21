@@ -16,27 +16,30 @@ export class Tilemap extends Component {
 	}
 
 	public override draw() {
-		love.graphics.push("all");
+		const draw = true;
+		if (draw) {
+			love.graphics.push("all");
 
-		for (const key in this.checkedPoints) {
-			const point = this.keyToCoord(tonumber(key)!);
-			const status = this.checkedPoints[key];
+			for (const key in this.checkedPoints) {
+				const point = this.keyToCoord(tonumber(key)!);
+				const status = this.checkedPoints[key];
 
-			if (status === 1) {
-				love.graphics.setColor(0, 1, 0, 1);
-			} else if (status === 2) {
-				love.graphics.setColor(0, 0, 1, 1);
-			} else {
-				love.graphics.setColor(1, 0, 0, 1);
+				if (status === 1) {
+					love.graphics.setColor(0, 1, 0, 1);
+				} else if (status === 2) {
+					love.graphics.setColor(0, 0, 1, 1);
+				} else {
+					love.graphics.setColor(1, 0, 0, 1);
+				}
+
+				love.graphics.points(point.x, point.y);
 			}
 
-			love.graphics.points(point.x, point.y);
-		}
+			love.graphics.pop();
 
-		love.graphics.pop();
-
-		if (love.keyboard.isDown("p")) {
-			this.checkedPoints = {};
+			if (love.keyboard.isDown("p")) {
+				this.checkedPoints = {};
+			}
 		}
 	}
 

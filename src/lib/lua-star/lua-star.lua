@@ -157,13 +157,20 @@ function module:find(width, height, start, goal, positionIsOpenFunc, useCache, e
 
         table.insert(closed, current)
 
-        success = listContains(closed, goal)
+        -- success = listContains(closed, goal)
 
         if not success then
 
             local adjacentList = getAdjacent(width, height, current, positionIsOpenFunc, not excludeDiagonalMoving)
 
             for _, adjacent in ipairs(adjacentList) do
+
+				local dx = goal.x - adjacent.x
+				local dy = goal.y - adjacent.y
+				local distance = math.sqrt(dx * dx + dy * dy)
+				if (distance < 2) then
+					success = true
+				end
 
                 if not listContains(closed, adjacent) then
 

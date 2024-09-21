@@ -1,6 +1,7 @@
 import { Component } from "../../core/component";
 import { Entity } from "../../core/entity";
 import { Scheduler } from "../../core/scheduler";
+import { EnemyGhostSpawnBuilder } from "../builders/enemyGhostSpawnBuilder";
 import { PlayerGhostSpawnBuiler } from "../builders/playerGhostSpawnBuilder";
 import { Position } from "../common/position";
 import { Input } from "../input/input";
@@ -10,6 +11,8 @@ import { Tilemap } from "../physics/tilemap";
 import { Velocity } from "../physics/velocity";
 import { AnimatedSprite } from "../rendering/animatedSprite";
 import { SpriteRenderer } from "../rendering/spriteRendering";
+
+type PlayerStates = "controlled" | "inanimate" | "possessing" | "possessed" | "tripped" | "get_up";
 
 export class PlayerBodyControls extends Component {
 	private input = this.scene.findComponent(Input);
@@ -29,6 +32,34 @@ export class PlayerBodyControls extends Component {
 		right: this.body.boundingBox.right,
 	};
 
+	private expellSelfRightSensor: BoundingBox = {
+		top: this.body.boundingBox.top + 1,
+		bottom: this.body.boundingBox.bottom,
+		left: this.body.boundingBox.right,
+		right: this.body.boundingBox.right + 11 + 16,
+	};
+
+	private expellSelfLeftSensor: BoundingBox = {
+		top: this.body.boundingBox.top + 1,
+		bottom: this.body.boundingBox.bottom,
+		left: this.body.boundingBox.left - 11 - 16,
+		right: this.body.boundingBox.left,
+	};
+
+	private expellEnemyRightSensor: BoundingBox = {
+		top: this.body.boundingBox.top + 1,
+		bottom: this.body.boundingBox.bottom,
+		left: this.body.boundingBox.right,
+		right: this.body.boundingBox.right + 11 + 13,
+	};
+
+	private expellEnemyLeftSensor: BoundingBox = {
+		top: this.body.boundingBox.top + 1,
+		bottom: this.body.boundingBox.bottom,
+		left: this.body.boundingBox.left - 11 - 13,
+		right: this.body.boundingBox.left,
+	};
+
 	private accelerationForce = 600;
 	private maxSpeed = 70;
 	private decelerationForce = 600;
@@ -38,7 +69,9 @@ export class PlayerBodyControls extends Component {
 	private possessedMaxSpeed = 15;
 	private lastHeight = 0;
 
-	private state: "controlled" | "inanimate" | "possessed" | "tripped" | "get_up" = "controlled";
+	private _state: PlayerStates = "controlled";
+	/* prettier-ignore */ public get state() { return this._state; }
+	/* prettier-ignore */ private set state(state: PlayerStates) { this._state = state; }
 
 	constructor(entity: Entity) {
 		super(entity);
@@ -76,16 +109,20 @@ export class PlayerBodyControls extends Component {
 			}
 
 			if (this.input.buttonBState.isPressed && isOnGround) {
-				this.velocity.x = 0;
-				this.velocity.y = 0;
+				const canExpell = (!this.spriteRenderer.isFlipped && this.tilemap.query(this.expellSelfRightSensor, this.position.x, this.position.y)) || (this.spriteRenderer.isFlipped && this.tilemap.query(this.expellSelfLeftSensor, this.position.x, this.position.y));
+				if (canExpell) {
+					this.velocity.x = 0;
+					this.velocity.y = 0;
 
-				this.state = "inanimate";
+					this.state = "inanimate";
 
-				this.scene.addEntity(new PlayerGhostSpawnBuiler(), {
-					x: this.position.x,
-					y: this.position.y,
-					flipped: this.spriteRenderer.isFlipped,
-				});
+					this.scene.addEntity(new PlayerGhostSpawnBuiler(), {
+						x: this.position.x,
+						y: this.position.y,
+						flipped: this.spriteRenderer.isFlipped,
+						playerBody: this,
+					});
+				}
 			}
 
 			// Animations
@@ -107,14 +144,6 @@ export class PlayerBodyControls extends Component {
 
 		if (this.state === "inanimate") {
 			this.animatedSprite.play("inanimate");
-
-			this.scene
-				.findComponent(Scheduler)
-				.waitForSeconds(5)
-				.then(() => {
-					this.state = "possessed";
-					this.lastHeight = this.position.y;
-				});
 		}
 
 		if (this.state === "possessed") {
@@ -145,6 +174,58 @@ export class PlayerBodyControls extends Component {
 		if (this.state === "get_up") {
 			this.animatedSprite.play("possessed_get_up");
 		}
+
+		if (this.state === "possessing") {
+			this.animatedSprite.play("possess");
+		}
+	}
+
+	public tryReclaim(): boolean {
+		const wasPossessed = this.state === "possessed" || this.state === "possessing" || this.state === "get_up" || this.state === "tripped";
+
+		if (wasPossessed) {
+			if (this.spriteRenderer.isFlipped) {
+				if (!this.tilemap.query(this.expellEnemyRightSensor, this.position.x, this.position.y)) {
+					return false;
+				}
+			} else {
+				if (!this.tilemap.query(this.expellEnemyLeftSensor, this.position.x, this.position.y)) {
+					return false;
+				}
+			}
+		}
+
+		this.state = "possessing";
+		this.velocity.x = 0;
+		this.velocity.y = 0;
+
+		this.scheduler.waitForSeconds(0.6).then(() => {
+			this.state = "controlled";
+			this.velocity.x = 0;
+			this.velocity.y = 0;
+		});
+
+		if (wasPossessed) {
+			this.scene.addEntity(new EnemyGhostSpawnBuilder(), {
+				x: this.position.x,
+				y: this.position.y,
+				flipped: this.spriteRenderer.isFlipped,
+				playerBody: this,
+			});
+		}
+
+		return true;
+	}
+
+	public possess(): void {
+		this.state = "possessing";
+		this.velocity.x = 0;
+		this.velocity.y = 0;
+
+		this.scheduler.waitForSeconds(0.6).then(() => {
+			this.state = "possessed";
+			this.lastHeight = this.position.y;
+		});
 	}
 
 	private onCollision(payload: { x: number; y: number }): void {
@@ -160,9 +241,17 @@ export class PlayerBodyControls extends Component {
 					this.velocity.x = 0;
 
 					this.scheduler.waitForSeconds(1).then(() => {
+						if (this.state === "controlled") {
+							return;
+						}
+
 						this.state = "get_up";
 
 						this.scheduler.waitForSeconds(0.2).then(() => {
+							if (this.state === "controlled") {
+								return;
+							}
+
 							this.state = "possessed";
 						});
 					});

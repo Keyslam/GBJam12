@@ -13,6 +13,7 @@ export class LevelLoader extends Component {
 	private enemyGhostBuilder = new EnemyGhostBuilder();
 
 	private layers: LdtkLayer[] = [];
+	private entities: LdtkEntity[] = [];
 
 	constructor(entity: Entity) {
 		super(entity);
@@ -41,21 +42,7 @@ export class LevelLoader extends Component {
 	private onLevelLoaded(level: LdtkLevel): void {}
 
 	private onEntity(entity: LdtkEntity): void {
-		if (entity.id === "Player") {
-			this.scene.addEntity(this.playerBuilder, {
-				x: entity.x,
-				y: entity.y,
-			});
-		}
-
-		if (entity.id === "EnemyGhost") {
-			this.scene.addEntity(this.enemyGhostBuilder, {
-				x: entity.x,
-				y: entity.y,
-				targetX: entity.props["Target"].cx,
-				targetY: entity.props["Target"].cy,
-			});
-		}
+		this.entities.push(entity);
 	}
 
 	private onLayer(layer: LdtkLayer): void {
@@ -63,6 +50,29 @@ export class LevelLoader extends Component {
 	}
 
 	private onLevelCreated(level: LdtkLevel): void {
+		const player = this.entities.find((x) => x.id === "Player")!;
+		const playerBody = this.scene
+			.addEntity(this.playerBuilder, {
+				x: player.x,
+				y: player.y,
+			})
+			.getComponent(PlayerBodyControls);
+
+		for (const entity of this.entities) {
+			if (entity.id === "Player") {
+				continue;
+			}
+
+			if (entity.id === "EnemyGhost") {
+				this.scene.addEntity(this.enemyGhostBuilder, {
+					x: entity.x,
+					y: entity.y,
+					flipped: false,
+					playerBody: playerBody,
+				});
+			}
+		}
+
 		const width = math.ceil(level.width / 12);
 		const height = math.ceil(level.height / 12);
 

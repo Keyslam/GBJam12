@@ -6,7 +6,7 @@ export class Camera extends Component {
 	private position = this.inject(Position);
 
 	private offsetX = 80;
-	private offsetY = 72;
+	private offsetY = 72 + 12;
 
 	private _target: Entity | undefined;
 	/* prettier-ignore */ public get target() { return this._target; }
@@ -23,10 +23,15 @@ export class Camera extends Component {
 	}
 
 	public attach(): void {
+		love.graphics.push("all");
 		love.graphics.translate(-this.position.x + this.offsetX, -this.position.y + this.offsetY);
 	}
 
 	public detach(): void {
-		love.graphics.translate(this.position.x - this.offsetX, this.position.y - this.offsetY);
+		love.graphics.pop();
+	}
+
+	private lerp(a: number, b: number, alpha: number): number {
+		return a + alpha * (b - a);
 	}
 }

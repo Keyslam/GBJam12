@@ -1,16 +1,14 @@
 import { Component } from "../../core/component";
 import { Entity } from "../../core/entity";
 import { Scheduler } from "../../core/scheduler";
-import { PlayerGhostBuilder } from "../builders/playerGhostBuilder";
+import { EnemyGhostBuilder } from "../builders/enemyGhostBuilder";
 import { Position } from "../common/position";
 import { AnimatedSprite } from "../rendering/animatedSprite";
-import { Camera } from "../rendering/camera";
 import { SpriteRenderer } from "../rendering/spriteRendering";
 import { PlayerBodyControls } from "./playerBodyControls";
 
-export class PlayerGhostSpawnController extends Component {
+export class EnemyGhostSpawnController extends Component {
 	private scheduler = this.scene.findComponent(Scheduler);
-	private camera = this.scene.findComponent(Camera);
 
 	private position = this.inject(Position);
 	private spriteRenderer = this.inject(SpriteRenderer);
@@ -19,16 +17,15 @@ export class PlayerGhostSpawnController extends Component {
 	constructor(entity: Entity, playerBody: PlayerBodyControls) {
 		super(entity);
 
-		this.scheduler.waitForSeconds(10 * 0.1).then(() => {
-			const x = this.position.x + 27 * (this.spriteRenderer.isFlipped ? -1 : 1);
+		this.scheduler.waitForSeconds(5 * 0.1).then(() => {
+			const x = this.position.x + 24 * (this.spriteRenderer.isFlipped ? 1 : -1);
 
-			const playerGhost = this.scene.addEntity(new PlayerGhostBuilder(), {
+			this.scene.addEntity(new EnemyGhostBuilder(), {
 				x: x,
-				y: this.position.y + 1,
+				y: this.position.y + 2,
 				flipped: this.spriteRenderer.isFlipped,
 				playerBody: playerBody,
 			});
-			this.camera.target = playerGhost;
 		});
 	}
 

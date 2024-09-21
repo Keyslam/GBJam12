@@ -1,6 +1,7 @@
 import { Builder } from "../../core/builder";
 import { Entity } from "../../core/entity";
 import { Position } from "../common/position";
+import { PlayerBodyControls } from "../locomotion/playerBodyControls";
 import { PlayerGhostSpawnController } from "../locomotion/playerGhostSpawnController";
 import { AnimatedSprite } from "../rendering/animatedSprite";
 import { Animation, createAnimation } from "../rendering/animation";
@@ -10,6 +11,7 @@ export interface PlayerGhostSpawnProps {
 	x: number;
 	y: number;
 	flipped: boolean;
+	playerBody: PlayerBodyControls;
 }
 
 export class PlayerGhostSpawnBuiler extends Builder<PlayerGhostSpawnProps> {
@@ -23,7 +25,7 @@ export class PlayerGhostSpawnBuiler extends Builder<PlayerGhostSpawnProps> {
 		entity.addComponent(Position, new Position(entity, props.x, props.y));
 		entity.addComponent(SpriteRenderer, new SpriteRenderer(entity, undefined, props.flipped));
 		entity.addComponent(AnimatedSprite, new AnimatedSprite(entity, this.animations, "spawn"));
-		entity.addComponent(PlayerGhostSpawnController, new PlayerGhostSpawnController(entity));
+		entity.addComponent(PlayerGhostSpawnController, new PlayerGhostSpawnController(entity, props.playerBody));
 	}
 
 	private createAnimation(row: number, frameCount: number, duration: number, playback: "loop" | "freeze" = "loop") {

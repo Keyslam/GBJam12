@@ -33,7 +33,7 @@ export class Body extends Component {
 	}
 
 	public override draw() {
-		const draw = false;
+		const draw = true;
 		if (draw) {
 			love.graphics.push("all");
 			love.graphics.setColor(1, 0, 0, 0.5);
