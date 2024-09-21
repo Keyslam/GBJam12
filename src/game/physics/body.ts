@@ -1,5 +1,6 @@
 import { Component } from "../../core/component";
 import { Entity } from "../../core/entity";
+import { Event } from "../../core/event";
 import { Position } from "../common/position";
 import { BoundingBox } from "./boundingBox";
 import { Tilemap } from "./tilemap";
@@ -18,6 +19,8 @@ export class Body extends Component {
 	/* prettier-ignore */ public get boundingBox() { return this._boundingBox; }
 	/* prettier-ignore */ private set boundingBox(boundingBox: BoundingBox) { this._boundingBox = boundingBox; }
 
+	public onCollision = new Event<{ x: number; y: number }>();
+
 	constructor(entity: Entity, boundingBox: BoundingBox) {
 		super(entity);
 
@@ -35,7 +38,7 @@ export class Body extends Component {
 			love.graphics.push("all");
 			love.graphics.setColor(1, 0, 0, 0.5);
 
-			love.graphics.rectangle("fill", this.position.x - 0.5, this.position.y - 0.5, 2, 2);
+			// love.graphics.rectangle("fill", this.position.x - 0.5, this.position.y - 0.5, 2, 2);
 
 			love.graphics.setColor(0, 0, 1, 0.5);
 
@@ -44,7 +47,7 @@ export class Body extends Component {
 			const width = this.position.x + this.boundingBox.right - x;
 			const height = this.position.y + this.boundingBox.bottom - y;
 
-			love.graphics.rectangle("line", x + 0.5, y + 0.5, width - 1, height - 1);
+			// love.graphics.rectangle("line", x + 0.5, y + 0.5, width - 1, height - 1);
 
 			love.graphics.pop();
 		}
@@ -67,6 +70,7 @@ export class Body extends Component {
 					this.position.x = targetX;
 					moveX -= sign;
 				} else {
+					this.onCollision.emit({ x: sign, y: 0 });
 					this.velocity.x = 0;
 					return;
 				}
@@ -91,6 +95,7 @@ export class Body extends Component {
 					this.position.y = targetY;
 					moveY -= sign;
 				} else {
+					this.onCollision.emit({ x: 0, y: sign });
 					this.velocity.y = 0;
 					return;
 				}

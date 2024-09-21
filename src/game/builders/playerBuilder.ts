@@ -27,10 +27,10 @@ export class PlayerBuilder extends Builder<PlayerProps> {
 		die: this.createAnimation(7, 5, 0.1),
 		possess: this.createAnimation(8, 2, 0.1),
 
-		zombie_walk: this.createAnimation(6, 4, 0.15),
-		zombie_fall: this.createAnimation(9, 3, 0.1),
-		zombie_trip: this.createAnimation(10, 2, 0.1, "freeze"),
-		zombie_get_up: this.createAnimation(11, 2, 0.1),
+		possessed_walk: this.createAnimation(6, 4, 0.15),
+		possessed_fall: this.createAnimation(9, 3, 0.1),
+		possessed_trip: this.createAnimation(10, 2, 0.1, "freeze"),
+		possessed_get_up: this.createAnimation(11, 2, 0.1),
 	};
 
 	public build(entity: Entity, props: PlayerProps): void {

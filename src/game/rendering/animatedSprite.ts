@@ -12,6 +12,10 @@ export class AnimatedSprite extends Component {
 	private currentDuration: number;
 	private currentFrameIndex: number;
 
+	private _didFinish: boolean;
+	/* prettier-ignore */ public get didFinish() { return this._didFinish; }
+	/* prettier-ignore */ private set didFinish(didFinish: boolean) { this._didFinish = didFinish; }
+
 	constructor(entity: Entity, animations: Record<string, Animation>, initalAnimationName: string) {
 		super(entity);
 
@@ -20,9 +24,12 @@ export class AnimatedSprite extends Component {
 
 		this.currentDuration = 0;
 		this.currentFrameIndex = 0;
+
+		this._didFinish = false;
 	}
 
 	public override update(dt: number): void {
+		this.didFinish = false;
 		this.currentDuration += dt;
 
 		while (this.currentDuration >= this.activeFrame.duration) {
@@ -30,6 +37,8 @@ export class AnimatedSprite extends Component {
 			this.currentFrameIndex++;
 
 			if (this.currentFrameIndex >= this.activeAnimation.frames.length) {
+				this.didFinish = true;
+
 				if (this.activeAnimation.playback === "freeze") {
 					this.currentFrameIndex -= 1;
 				}

@@ -1,6 +1,7 @@
 import { Scene } from "./core/scene";
 import { InputBuilder } from "./game/builders/inputBuilder";
 import { LevelLoaderBuilder } from "./game/builders/levelLoaderBuilder";
+import { SchedulerBuilder } from "./game/builders/schedulerBuilder";
 import { TilemapBuilder } from "./game/builders/tilemapBuilder";
 import { LevelLoader } from "./game/levels/levelLoader";
 
@@ -12,6 +13,7 @@ export class Context {
 	constructor() {
 		this.scene = new Scene();
 
+		this.scene.addEntity(new SchedulerBuilder(), undefined);
 		this.scene.addEntity(new InputBuilder(), undefined);
 		this.scene.addEntity(new TilemapBuilder(), undefined);
 		this.scene.addEntity(new LevelLoaderBuilder(), undefined);

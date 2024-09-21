@@ -18,62 +18,12 @@
 				"id": "Player",
 				"iid": "2087d390-73f0-11ef-a3d5-9d98c06e290a",
 				"layer": "Entities",
-				"x": 23,
-				"y": 118,
+				"x": 144,
+				"y": 31,
 				"width": 12,
 				"height": 22,
 				"color": 12470831,
 				"customFields" : {}
-			}
-		],
-		"EnemyGhost": [
-			{
-				"id": "EnemyGhost",
-				"iid": "e0774d30-73f0-11ef-a3d5-dff859aa1a77",
-				"layer": "Entities",
-				"x": 29,
-				"y": 28,
-				"width": 20,
-				"height": 20,
-				"color": 15349948,
-				"customFields": {
-					"Target": {
-						"cx": 32,
-						"cy": 62
-					}
-				}
-			},
-			{
-				"id": "EnemyGhost",
-				"iid": "570aaef0-73f0-11ef-a3d5-4da73911a5d6",
-				"layer": "Entities",
-				"x": 144,
-				"y": 117,
-				"width": 20,
-				"height": 20,
-				"color": 15349948,
-				"customFields": {
-					"Target": {
-						"cx": 113,
-						"cy": 22
-					}
-				}
-			},
-			{
-				"id": "EnemyGhost",
-				"iid": "58fbf7a0-73f0-11ef-a3d5-fd800ce42f35",
-				"layer": "Entities",
-				"x": 47,
-				"y": 120,
-				"width": 20,
-				"height": 20,
-				"color": 15349948,
-				"customFields": {
-					"Target": {
-						"cx": 146,
-						"cy": 58
-					}
-				}
 			}
 		]
 	}
