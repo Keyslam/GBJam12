@@ -2,6 +2,7 @@ import { Source } from "love.audio";
 import { Component } from "../../core/component";
 import { Entity } from "../../core/entity";
 import { CameraBuilder } from "../builders/cameraBuilder";
+import { DoorBuilder } from "../builders/doorBuilder";
 import { EnemyGhostBuilder } from "../builders/enemyGhostBuilder";
 import { InputBuilder } from "../builders/inputBuilder";
 import { PlayerBuilder } from "../builders/playerBuilder";
@@ -28,6 +29,7 @@ export class LevelLoader extends Component {
 	private trapdoorBuilder = new TrapdoorBuilder();
 	private switchBuilder = new SwitchBuilder();
 	private spikeBuilder = new SpikesBuilder();
+	private doorBuilder = new DoorBuilder();
 
 	private layers: LdtkLayer[] = [];
 	private entities: LdtkEntity[] = [];
@@ -46,28 +48,22 @@ export class LevelLoader extends Component {
 		ldtk.load("assets/maps/test.ldtk");
 	}
 
+	private name: string = "";
+	private willLoad = false;
+	private loadedOnce = false;
+
 	public load(name: string) {
-		this.scene.addEntity(new SchedulerBuilder(), undefined);
-		this.scene.addEntity(new InputBuilder(), undefined);
-		this.scene.addEntity(new SignalStoreBuilder(), undefined);
-		this.scene.addEntity(new TilemapBuilder(), undefined);
-		this.scene.addEntity(new PostProcessBuilder(), undefined).getComponent(PostProcess);
-		this.scene
-			.addEntity(new CameraBuilder(), {
-				x: 80,
-				y: 72,
-			})
-			.getComponent(Camera);
+		if (this.loading) {
+			return;
+		}
 
-		this.signalStore = this.scene.findComponent(SignalStore);
-		this.tilemap = this.scene.findComponent(Tilemap);
-
-		ldtk.level(name);
+		this.name = name;
+		this.willLoad = true;
 	}
 
 	public willReload = false;
 	public reload() {
-		this.willReload = true;
+		this.load(this.name);
 	}
 
 	public handleReload() {
@@ -86,6 +82,64 @@ export class LevelLoader extends Component {
 			this.entities = [];
 
 			this.load("Level_0");
+		}
+	}
+	public loading = false;
+
+	public async handleLoad(): Promise<void> {
+		if (this.loading) {
+			return;
+		}
+
+		if (this.willLoad) {
+			this.loading = true;
+			this.willLoad = false;
+
+			if (this.loadedOnce) {
+				const postProcess = this.scene.findComponent(PostProcess);
+				await postProcess.fadeOut();
+			}
+
+			const paletteIndex = this.scene.tryFindChildByComponent(PostProcess)?.getComponent(PostProcess)?.paletteIndex || 0;
+
+			for (const entity of this.scene.entities) {
+				if (entity === this.entity) {
+					continue;
+				}
+
+				entity.destroy();
+			}
+			this.scene.removeDeadEntities();
+
+			this.layers = [];
+			this.entities = [];
+
+			this.scene.addEntity(new SchedulerBuilder(), undefined);
+			this.scene.addEntity(new InputBuilder(), undefined);
+			this.scene.addEntity(new SignalStoreBuilder(), undefined);
+			this.scene.addEntity(new TilemapBuilder(), undefined);
+			this.scene.addEntity(new PostProcessBuilder(), undefined).getComponent(PostProcess);
+			this.scene
+				.addEntity(new CameraBuilder(), {
+					x: 80,
+					y: 72,
+				})
+				.getComponent(Camera);
+
+			this.signalStore = this.scene.findComponent(SignalStore);
+			this.tilemap = this.scene.findComponent(Tilemap);
+
+			// const scheduler = this.scene.findComponent(Scheduler);
+			ldtk.level(this.name);
+
+			this.scene.update(0);
+
+			const postProcess = this.scene.findComponent(PostProcess);
+			postProcess.paletteIndex = paletteIndex;
+			await postProcess.fadeIn();
+
+			this.loadedOnce = true;
+			this.loading = false;
 		}
 	}
 
@@ -170,6 +224,15 @@ export class LevelLoader extends Component {
 				this.scene.addEntity(this.spikeBuilder, {
 					x: entity.x,
 					y: entity.y,
+				});
+			}
+
+			if (entity.id === "Door") {
+				this.scene.addEntity(this.doorBuilder, {
+					x: entity.x,
+					y: entity.y,
+					level: entity.props["Level"],
+					levelLoader: this,
 				});
 			}
 
@@ -265,6 +328,7 @@ export class LevelLoader extends Component {
 			this.track = love.audio.newSource("assets/music/" + track + ".ogg", "stream");
 			this.track.setLooping(true);
 			this.track.play();
+			// this.track.setVolume(0.0);
 			this.track.setVolume(0.7);
 			this.playingTrack = track;
 		}

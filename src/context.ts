@@ -1,4 +1,5 @@
 import { Scene } from "./core/scene";
+import { Scheduler } from "./core/scheduler";
 import { LevelLoaderBuilder } from "./game/builders/levelLoaderBuilder";
 import { LevelLoader } from "./game/levels/levelLoader";
 import { Camera } from "./game/rendering/camera";
@@ -21,10 +22,17 @@ export class Context {
 	}
 
 	public update(dt: number): void {
-		this.scene.update(dt);
-		this.scene.postUpdate(dt);
+		if (this.levelLoader.loading) {
+			this.scene.findChildByComponent(LevelLoader).update(dt);
+			this.scene.findChildByComponent(Scheduler).update(dt);
+			this.scene.findChildByComponent(PostProcess).postUpdate(dt);
+		} else {
+			this.scene.update(dt);
+			this.scene.postUpdate(dt);
+		}
 
 		this.levelLoader.handleReload();
+		this.levelLoader.handleLoad();
 	}
 
 	public draw(): void {
