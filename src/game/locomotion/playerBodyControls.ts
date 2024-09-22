@@ -8,6 +8,7 @@ import { Input } from "../input/input";
 import { LevelLoader } from "../levels/levelLoader";
 import { Body } from "../physics/body";
 import { BoundingBox } from "../physics/boundingBox";
+import { Mass } from "../physics/mass";
 import { Tilemap } from "../physics/tilemap";
 import { Velocity } from "../physics/velocity";
 import { AnimatedSprite } from "../rendering/animatedSprite";
@@ -27,6 +28,7 @@ export class PlayerBodyControls extends Component {
 	private animatedSprite = this.inject(AnimatedSprite);
 	private velocity = this.inject(Velocity);
 	private body = this.inject(Body);
+	private mass = this.inject(Mass);
 
 	private feetSensor: BoundingBox = {
 		top: this.body.boundingBox.bottom,
@@ -66,11 +68,13 @@ export class PlayerBodyControls extends Component {
 	private accelerationForce = 600;
 	private maxSpeed = 70;
 	private decelerationForce = 600;
-	private jumpForce = 260;
+	private jumpForce = 170;
 
 	private possessedAccelerationForce = 400;
 	private possessedMaxSpeed = 15;
 	private lastHeight = 0;
+
+	private isHighJumping = false;
 
 	private _state: PlayerStates = "controlled";
 	/* prettier-ignore */ public get state() { return this._state; }
@@ -100,7 +104,7 @@ export class PlayerBodyControls extends Component {
 		if (this.state === "controlled") {
 			const horizontalInput = (this.input.buttonLeftState.isDown ? -1 : 0) + (this.input.buttonRightState.isDown ? 1 : 0);
 
-			const isOnGround = !this.tilemap.query(this.feetSensor, this.position.x, this.position.y);
+			const isOnGround = !this.tilemap.query(this.feetSensor, this.position.x, this.position.y, this.velocity.y < 0);
 
 			if (horizontalInput === 0) {
 				const sign = Math.sign(this.velocity.x);
@@ -129,9 +133,26 @@ export class PlayerBodyControls extends Component {
 
 			if (this.input.buttonAState.isPressed && isOnGround) {
 				this.velocity.y = -this.jumpForce;
+				this.isHighJumping = true;
 
 				const jumpSound = love.audio.newSource("assets/sfx/square_jump.wav", "stream");
 				jumpSound.play();
+			}
+
+			if (this.isHighJumping) {
+				if (this.input.buttonAState.isReleased) {
+					this.isHighJumping = false;
+				}
+
+				if (this.velocity.y > 0) {
+					this.isHighJumping = false;
+				}
+			}
+
+			if (this.isHighJumping) {
+				this.mass.gravity = 500;
+			} else {
+				this.mass.gravity = 1000;
 			}
 
 			if (this.input.buttonBState.isPressed && isOnGround) {

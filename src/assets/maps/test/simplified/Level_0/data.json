@@ -84,19 +84,6 @@
 				}
 			}
 		],
-		"Player": [
-			{
-				"id": "Player",
-				"iid": "2087d390-73f0-11ef-a3d5-9d98c06e290a",
-				"layer": "Entities",
-				"x": 512,
-				"y": 144,
-				"width": 24,
-				"height": 24,
-				"color": 12470831,
-				"customFields" : {}
-			}
-		],
 		"Spikes": [
 			{
 				"id": "Spikes",
@@ -189,6 +176,19 @@
 				"customFields": {
 					"Level": "Level_1"
 				}
+			}
+		],
+		"Player": [
+			{
+				"id": "Player",
+				"iid": "2087d390-73f0-11ef-a3d5-9d98c06e290a",
+				"layer": "Entities",
+				"x": 98,
+				"y": 192,
+				"width": 24,
+				"height": 24,
+				"color": 12470831,
+				"customFields" : {}
 			}
 		]
 	}

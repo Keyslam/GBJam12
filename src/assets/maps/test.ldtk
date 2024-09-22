@@ -2278,22 +2278,6 @@
 							"__worldY": -12
 						},
 						{
-							"__identifier": "Player",
-							"__grid": [512,144],
-							"__pivot": [0.521,0.5],
-							"__tags": [],
-							"__tile": null,
-							"__smartColor": "#BE4A2F",
-							"iid": "2087d390-73f0-11ef-a3d5-9d98c06e290a",
-							"width": 24,
-							"height": 24,
-							"defUid": 25,
-							"px": [512,144],
-							"fieldInstances": [],
-							"__worldX": 512,
-							"__worldY": 72
-						},
-						{
 							"__identifier": "Spikes",
 							"__grid": [408,192],
 							"__pivot": [0,0],
@@ -2423,6 +2407,22 @@
 							}] }],
 							"__worldX": 564,
 							"__worldY": 48
+						},
+						{
+							"__identifier": "Player",
+							"__grid": [98,192],
+							"__pivot": [0.521,0.5],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#BE4A2F",
+							"iid": "2087d390-73f0-11ef-a3d5-9d98c06e290a",
+							"width": 24,
+							"height": 24,
+							"defUid": 25,
+							"px": [98,192],
+							"fieldInstances": [],
+							"__worldX": 98,
+							"__worldY": 120
 						}
 					]
 				},

@@ -35,7 +35,9 @@ export class Door extends Component {
 		const playerRight = playerPosition.x + playerActor.boundingBox.right;
 
 		if (left < playerRight && right > playerLeft && top < playerBottom && bottom > playerTop) {
-			this.levelLoader.load(this.level);
+			if (this.playerBody.state === "controlled") {
+				this.levelLoader.load(this.level);
+			}
 		}
 	}
 }
