@@ -1,3 +1,4 @@
+import { Source } from "love.audio";
 import { Component } from "../../core/component";
 import { Entity } from "../../core/entity";
 import { CameraBuilder } from "../builders/cameraBuilder";
@@ -11,6 +12,7 @@ import { SpikesBuilder } from "../builders/spikesBuilder";
 import { SwitchBuilder } from "../builders/switchBuilder";
 import { TilemapBuilder } from "../builders/tilemapBuilder";
 import { TrapdoorBuilder } from "../builders/trapdoorBuilder";
+import { Position } from "../common/position";
 import { PlayerBodyControls } from "../locomotion/playerBodyControls";
 import { Tile, Tilemap } from "../physics/tilemap";
 import { Camera } from "../rendering/camera";
@@ -29,6 +31,9 @@ export class LevelLoader extends Component {
 
 	private layers: LdtkLayer[] = [];
 	private entities: LdtkEntity[] = [];
+
+	private track: Source | undefined;
+	private playingTrack: string = "";
 
 	constructor(entity: Entity) {
 		super(entity);
@@ -248,6 +253,20 @@ export class LevelLoader extends Component {
 			const camera = this.scene.findComponent(Camera);
 
 			camera.target = player;
+			camera.position.x = player.getComponent(Position).x;
+			camera.position.y = player.getComponent(Position).y;
+			camera.doLerp = false;
+		}
+
+		const track = level.props["track"] as string;
+		if (track !== this.playingTrack) {
+			this.track?.stop();
+
+			this.track = love.audio.newSource("assets/music/" + track + ".ogg", "stream");
+			this.track.setLooping(true);
+			this.track.play();
+			this.track.setVolume(0.7);
+			this.playingTrack = track;
 		}
 	}
 }

@@ -23,6 +23,8 @@ export class Switch extends Component {
 	private bodyWasNear = false;
 	private ghostWasNear = false;
 
+	private toggleSound = love.audio.newSource("assets/sfx/noise_lever_toggle_2.wav", "static");
+
 	constructor(entity: Entity, signalId: number) {
 		super(entity);
 
@@ -45,8 +47,10 @@ export class Switch extends Component {
 
 					if (this.active) {
 						this.animatedSprite.play("toggle_on");
+						this.toggleSound.play();
 					} else {
 						this.animatedSprite.play("toggle_off");
+						this.toggleSound.play();
 					}
 				}
 			} else {
@@ -71,8 +75,10 @@ export class Switch extends Component {
 
 						if (this.active) {
 							this.animatedSprite.play("toggle_on");
+							this.toggleSound.play();
 						} else {
 							this.animatedSprite.play("toggle_off");
+							this.toggleSound.play();
 						}
 					}
 				} else {

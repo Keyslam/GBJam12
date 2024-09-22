@@ -7,7 +7,9 @@
 	"height": 216,
 	"bgColor": "#696A79",
 	"neighbourLevels": [],
-	"customFields" : {},
+	"customFields": {
+		"track": "somthin_on_my_mind_alt"
+	},
 	"layers": [
 		"Walls_Autolayer.png",
 		"Walls_Foreground_Autolayer.png",
@@ -159,6 +161,50 @@
 				"layer": "Entities",
 				"x": 60,
 				"y": 96,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "4599b980-73f0-11ef-82d8-5bac64755c3a",
+				"layer": "Entities",
+				"x": 516,
+				"y": 156,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "46821db0-73f0-11ef-82d8-11fff48bc837",
+				"layer": "Entities",
+				"x": 552,
+				"y": 156,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "47621d70-73f0-11ef-82d8-f7081d1b898f",
+				"layer": "Entities",
+				"x": 540,
+				"y": 156,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "483e9ac0-73f0-11ef-82d8-2588da3b6c85",
+				"layer": "Entities",
+				"x": 528,
+				"y": 156,
 				"width": 12,
 				"height": 12,
 				"color": 7552569,

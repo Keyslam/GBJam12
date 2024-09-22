@@ -78,11 +78,20 @@ export class PlayerBodyControls extends Component {
 
 	private levelLoader: LevelLoader;
 
+	private walkSound = love.audio.newSource("assets/sfx/noise_walk.wav", "stream");
+	private deathSound = love.audio.newSource("assets/sfx/noise_death.wav", "stream");
+	private possessSound = love.audio.newSource("assets/sfx/wave_posses_1.wav", "stream");
+	private reclaimSound = love.audio.newSource("assets/sfx/wave_reclaim.wav", "stream");
+	private exitBodySound = love.audio.newSource("assets/sfx/noise_rise.wav", "stream");
+
 	constructor(entity: Entity, levelLoader: LevelLoader) {
 		super(entity);
 
 		this.body.onCollision.subscribe((payload) => this.onCollision(payload));
 		this.levelLoader = levelLoader;
+
+		this.walkSound.setLooping(true);
+		this.deathSound.setLooping(false);
 	}
 
 	public override update(dt: number): void {
@@ -112,8 +121,17 @@ export class PlayerBodyControls extends Component {
 				this.spriteRenderer.isFlipped = true;
 			}
 
+			// if (horizontalInput !== 0 && isOnGround) {
+			// 	this.walkSound.play();
+			// } else {
+			// 	this.walkSound.pause();
+			// }
+
 			if (this.input.buttonAState.isPressed && isOnGround) {
 				this.velocity.y = -this.jumpForce;
+
+				const jumpSound = love.audio.newSource("assets/sfx/square_jump.wav", "stream");
+				jumpSound.play();
 			}
 
 			if (this.input.buttonBState.isPressed && isOnGround) {
@@ -123,6 +141,8 @@ export class PlayerBodyControls extends Component {
 					this.velocity.y = 0;
 
 					this.state = "inanimate";
+
+					this.exitBodySound.play();
 
 					this.scene.addEntity(new PlayerGhostSpawnBuiler(), {
 						x: this.position.x,
@@ -220,6 +240,8 @@ export class PlayerBodyControls extends Component {
 			}
 		}
 
+		this.reclaimSound.play();
+
 		this.state = "possessing";
 		this.velocity.x = 0;
 		this.velocity.y = 0;
@@ -243,6 +265,10 @@ export class PlayerBodyControls extends Component {
 	}
 
 	public die(): void {
+		if (this.state !== "dead") {
+			this.deathSound.play();
+		}
+
 		this.state = "dead";
 		this.velocity.x = 0;
 
@@ -253,6 +279,10 @@ export class PlayerBodyControls extends Component {
 	public possess(): void {
 		if (this.state === "dead") {
 			return;
+		}
+
+		if (this.state !== "possessing") {
+			this.possessSound.play();
 		}
 
 		this.state = "possessing";

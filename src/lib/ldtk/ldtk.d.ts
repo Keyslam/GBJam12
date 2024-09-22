@@ -35,7 +35,7 @@ declare interface LdtkLevel {
 	width: number;
 	height: number;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	props: Record<string, any[]>;
+	props: Record<string, any>;
 }
 
 declare namespace ldtk {

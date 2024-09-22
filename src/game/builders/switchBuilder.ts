@@ -53,14 +53,14 @@ export class SwitchBuilder extends Builder<SwitchProps> {
 					initial: { frames: [{ sprite: this.left, duration: 0.1 }], playback: "freeze" },
 					toggle_on: {
 						frames: [
-							{ sprite: this.middle, duration: 0.3 },
+							{ sprite: this.middle, duration: 0.1 },
 							{ sprite: this.right, duration: 0.1 },
 						],
 						playback: "freeze",
 					},
 					toggle_off: {
 						frames: [
-							{ sprite: this.middle, duration: 0.3 },
+							{ sprite: this.middle, duration: 0.1 },
 							{ sprite: this.left, duration: 0.1 },
 						],
 						playback: "freeze",

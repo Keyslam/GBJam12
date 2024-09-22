@@ -3,7 +3,7 @@ import { Entity } from "../../core/entity";
 import { Position } from "../common/position";
 
 export class Camera extends Component {
-	private position = this.inject(Position);
+	public position = this.inject(Position);
 
 	private offsetX = 80;
 	private offsetY = 72 + 12;
