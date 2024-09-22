@@ -1,11 +1,5 @@
 import { Scene } from "./core/scene";
-import { CameraBuilder } from "./game/builders/cameraBuilder";
-import { InputBuilder } from "./game/builders/inputBuilder";
 import { LevelLoaderBuilder } from "./game/builders/levelLoaderBuilder";
-import { PostProcessBuilder } from "./game/builders/postProcessBuilder";
-import { SchedulerBuilder } from "./game/builders/schedulerBuilder";
-import { SignalStoreBuilder } from "./game/builders/signalStoreBuilder";
-import { TilemapBuilder } from "./game/builders/tilemapBuilder";
 import { LevelLoader } from "./game/levels/levelLoader";
 import { Camera } from "./game/rendering/camera";
 import { PostProcess } from "./game/rendering/postProcess";
@@ -14,46 +8,39 @@ export class Context {
 	private canvas = love.graphics.newCanvas(160, 144);
 
 	private scene: Scene;
-	private postProcess: PostProcess;
-	private camera: Camera;
+
+	private levelLoader: LevelLoader;
 
 	constructor() {
 		this.scene = new Scene();
 
-		this.scene.addEntity(new SchedulerBuilder(), undefined);
-		this.scene.addEntity(new InputBuilder(), undefined);
-		this.scene.addEntity(new SignalStoreBuilder(), undefined);
-		this.scene.addEntity(new TilemapBuilder(), undefined);
 		this.scene.addEntity(new LevelLoaderBuilder(), undefined);
-		this.postProcess = this.scene.addEntity(new PostProcessBuilder(), undefined).getComponent(PostProcess);
-		this.camera = this.scene
-			.addEntity(new CameraBuilder(), {
-				x: 80,
-				y: 72,
-			})
-			.getComponent(Camera);
+		this.levelLoader = this.scene.findComponent(LevelLoader);
 
-		const levelLoader = this.scene.findComponent(LevelLoader);
-
-		levelLoader.load("Level_0");
+		this.levelLoader.load("Level_0");
 	}
 
 	public update(dt: number): void {
 		this.scene.update(dt);
 		this.scene.postUpdate(dt);
+
+		this.levelLoader.handleReload();
 	}
 
 	public draw(): void {
+		const postProcess = this.scene.findComponent(PostProcess);
+		const camera = this.scene.findComponent(Camera);
+
 		love.graphics.setCanvas(this.canvas);
 
-		this.camera.attach();
-		this.postProcess.attach();
+		camera.attach();
+		postProcess.attach();
 
 		love.graphics.setColor(1, 1, 1, 1);
 
 		this.scene.draw();
-		this.postProcess.detatch();
-		this.camera.detach();
+		postProcess.detatch();
+		camera.detach();
 
 		this.scene.drawScreen();
 

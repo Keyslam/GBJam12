@@ -20,8 +20,8 @@
 				"id": "EnemyGhost",
 				"iid": "1e874d20-73f0-11ef-83e4-831d39f23c62",
 				"layer": "Entities",
-				"x": 266,
-				"y": 52,
+				"x": 385,
+				"y": 137,
 				"width": 20,
 				"height": 20,
 				"color": 15349948,
@@ -58,19 +58,6 @@
 				}
 			}
 		],
-		"Player": [
-			{
-				"id": "Player",
-				"iid": "2087d390-73f0-11ef-a3d5-9d98c06e290a",
-				"layer": "Entities",
-				"x": 186,
-				"y": 29,
-				"width": 24,
-				"height": 24,
-				"color": 12470831,
-				"customFields" : {}
-			}
-		],
 		"Switch": [
 			{
 				"id": "Switch",
@@ -84,6 +71,98 @@
 				"customFields": {
 					"Id": 1
 				}
+			}
+		],
+		"Player": [
+			{
+				"id": "Player",
+				"iid": "2087d390-73f0-11ef-a3d5-9d98c06e290a",
+				"layer": "Entities",
+				"x": 393,
+				"y": 175,
+				"width": 24,
+				"height": 24,
+				"color": 12470831,
+				"customFields" : {}
+			}
+		],
+		"Spikes": [
+			{
+				"id": "Spikes",
+				"iid": "1b721710-73f0-11ef-82d8-9b78487b6749",
+				"layer": "Entities",
+				"x": 408,
+				"y": 192,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "1c727010-73f0-11ef-82d8-5d0c015ff93c",
+				"layer": "Entities",
+				"x": 420,
+				"y": 192,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "1d8bf660-73f0-11ef-82d8-4b57ff5502aa",
+				"layer": "Entities",
+				"x": 432,
+				"y": 192,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "1f7f3ae0-73f0-11ef-82d8-55d8a392862a",
+				"layer": "Entities",
+				"x": 468,
+				"y": 180,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "200cadd0-73f0-11ef-82d8-fb5ed281c172",
+				"layer": "Entities",
+				"x": 480,
+				"y": 180,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "5fff9fa0-73f0-11ef-82d8-5d249b220888",
+				"layer": "Entities",
+				"x": 48,
+				"y": 96,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "606bcef0-73f0-11ef-82d8-df9abd487d4c",
+				"layer": "Entities",
+				"x": 60,
+				"y": 96,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
 			}
 		]
 	}

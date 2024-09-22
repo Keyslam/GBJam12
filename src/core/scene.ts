@@ -3,7 +3,7 @@ import { Component } from "./component";
 import { Entity } from "./entity";
 
 export class Scene {
-	private entities: Entity[];
+	public entities: Entity[];
 
 	constructor() {
 		this.entities = [];
@@ -92,7 +92,7 @@ export class Scene {
 		throw new Error("Component not found in scene");
 	}
 
-	private removeDeadEntities(): void {
+	public removeDeadEntities(): void {
 		const destroyedEntities = [];
 		for (const entity of this.entities) {
 			if (entity.isDestroyed) {

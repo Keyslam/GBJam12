@@ -1,23 +1,31 @@
 import { Component } from "../../core/component";
 import { Entity } from "../../core/entity";
+import { CameraBuilder } from "../builders/cameraBuilder";
 import { EnemyGhostBuilder } from "../builders/enemyGhostBuilder";
+import { InputBuilder } from "../builders/inputBuilder";
 import { PlayerBuilder } from "../builders/playerBuilder";
+import { PostProcessBuilder } from "../builders/postProcessBuilder";
+import { SchedulerBuilder } from "../builders/schedulerBuilder";
+import { SignalStoreBuilder } from "../builders/signalStoreBuilder";
+import { SpikesBuilder } from "../builders/spikesBuilder";
 import { SwitchBuilder } from "../builders/switchBuilder";
+import { TilemapBuilder } from "../builders/tilemapBuilder";
 import { TrapdoorBuilder } from "../builders/trapdoorBuilder";
 import { PlayerBodyControls } from "../locomotion/playerBodyControls";
 import { Tile, Tilemap } from "../physics/tilemap";
 import { Camera } from "../rendering/camera";
+import { PostProcess } from "../rendering/postProcess";
 import { SignalStore } from "../signals/signalStore";
 
 export class LevelLoader extends Component {
-	private signalStore = this.scene.findComponent(SignalStore);
-
-	private tilemap: Tilemap;
+	private signalStore!: SignalStore;
+	private tilemap!: Tilemap;
 
 	private playerBuilder = new PlayerBuilder();
 	private enemyGhostBuilder = new EnemyGhostBuilder();
 	private trapdoorBuilder = new TrapdoorBuilder();
 	private switchBuilder = new SwitchBuilder();
+	private spikeBuilder = new SpikesBuilder();
 
 	private layers: LdtkLayer[] = [];
 	private entities: LdtkEntity[] = [];
@@ -31,12 +39,49 @@ export class LevelLoader extends Component {
 		ldtk.onLevelCreated = (layer) => this.onLevelCreated(layer);
 
 		ldtk.load("assets/maps/test.ldtk");
-
-		this.tilemap = this.scene.findComponent(Tilemap);
 	}
 
 	public load(name: string) {
+		this.scene.addEntity(new SchedulerBuilder(), undefined);
+		this.scene.addEntity(new InputBuilder(), undefined);
+		this.scene.addEntity(new SignalStoreBuilder(), undefined);
+		this.scene.addEntity(new TilemapBuilder(), undefined);
+		this.scene.addEntity(new PostProcessBuilder(), undefined).getComponent(PostProcess);
+		this.scene
+			.addEntity(new CameraBuilder(), {
+				x: 80,
+				y: 72,
+			})
+			.getComponent(Camera);
+
+		this.signalStore = this.scene.findComponent(SignalStore);
+		this.tilemap = this.scene.findComponent(Tilemap);
+
 		ldtk.level(name);
+	}
+
+	public willReload = false;
+	public reload() {
+		this.willReload = true;
+	}
+
+	public handleReload() {
+		if (this.willReload) {
+			this.willReload = false;
+			for (const entity of this.scene.entities) {
+				if (entity === this.entity) {
+					continue;
+				}
+
+				entity.destroy();
+			}
+			this.scene.removeDeadEntities();
+
+			this.layers = [];
+			this.entities = [];
+
+			this.load("Level_0");
+		}
 	}
 
 	public override draw() {
@@ -62,6 +107,7 @@ export class LevelLoader extends Component {
 			.addEntity(this.playerBuilder, {
 				x: player.x,
 				y: player.y,
+				levelLoader: this,
 			})
 			.getComponent(PlayerBodyControls);
 
@@ -113,6 +159,13 @@ export class LevelLoader extends Component {
 
 				bb = { x: 0, y: 0, w: 12, h: 5 };
 				kyo = 1;
+			}
+
+			if (entity.id === "Spikes") {
+				this.scene.addEntity(this.spikeBuilder, {
+					x: entity.x,
+					y: entity.y,
+				});
 			}
 
 			if (bb) {

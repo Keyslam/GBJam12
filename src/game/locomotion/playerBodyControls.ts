@@ -5,19 +5,22 @@ import { EnemyGhostSpawnBuilder } from "../builders/enemyGhostSpawnBuilder";
 import { PlayerGhostSpawnBuiler } from "../builders/playerGhostSpawnBuilder";
 import { Position } from "../common/position";
 import { Input } from "../input/input";
+import { LevelLoader } from "../levels/levelLoader";
 import { Body } from "../physics/body";
 import { BoundingBox } from "../physics/boundingBox";
 import { Tilemap } from "../physics/tilemap";
 import { Velocity } from "../physics/velocity";
 import { AnimatedSprite } from "../rendering/animatedSprite";
+import { Camera } from "../rendering/camera";
 import { SpriteRenderer } from "../rendering/spriteRendering";
 
-type PlayerStates = "controlled" | "inanimate" | "possessing" | "possessed" | "tripped" | "get_up";
+type PlayerStates = "controlled" | "inanimate" | "possessing" | "possessed" | "tripped" | "get_up" | "dead";
 
 export class PlayerBodyControls extends Component {
 	private input = this.scene.findComponent(Input);
 	private tilemap = this.scene.findComponent(Tilemap);
 	private scheduler = this.scene.findComponent(Scheduler);
+	private camera = this.scene.findComponent(Camera);
 
 	private position = this.inject(Position);
 	private spriteRenderer = this.inject(SpriteRenderer);
@@ -73,10 +76,13 @@ export class PlayerBodyControls extends Component {
 	/* prettier-ignore */ public get state() { return this._state; }
 	/* prettier-ignore */ private set state(state: PlayerStates) { this._state = state; }
 
-	constructor(entity: Entity) {
+	private levelLoader: LevelLoader;
+
+	constructor(entity: Entity, levelLoader: LevelLoader) {
 		super(entity);
 
 		this.body.onCollision.subscribe((payload) => this.onCollision(payload));
+		this.levelLoader = levelLoader;
 	}
 
 	public override update(dt: number): void {
@@ -184,9 +190,22 @@ export class PlayerBodyControls extends Component {
 		if (this.state === "possessing") {
 			this.animatedSprite.play("possess");
 		}
+
+		if (this.state === "dead") {
+			this.animatedSprite.play("die");
+			this.camera.doLerp = true;
+
+			if (this.input.buttonStartState.isPressed) {
+				this.levelLoader.reload();
+			}
+		}
 	}
 
 	public tryReclaim(): boolean {
+		if (this.state === "dead") {
+			return false;
+		}
+
 		const wasPossessed = this.state === "possessed" || this.state === "possessing" || this.state === "get_up" || this.state === "tripped";
 
 		if (wasPossessed) {
@@ -223,7 +242,19 @@ export class PlayerBodyControls extends Component {
 		return true;
 	}
 
+	public die(): void {
+		this.state = "dead";
+		this.velocity.x = 0;
+
+		this.camera.target = this.entity;
+		this.camera.doLerp = true;
+	}
+
 	public possess(): void {
+		if (this.state === "dead") {
+			return;
+		}
+
 		this.state = "possessing";
 		this.velocity.x = 0;
 		this.velocity.y = 0;

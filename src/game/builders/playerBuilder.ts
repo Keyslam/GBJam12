@@ -1,6 +1,7 @@
 import { Builder } from "../../core/builder";
 import { Entity } from "../../core/entity";
 import { Position } from "../common/position";
+import { LevelLoader } from "../levels/levelLoader";
 import { PlayerBodyControls } from "../locomotion/playerBodyControls";
 import { Body } from "../physics/body";
 import { Mass } from "../physics/mass";
@@ -12,6 +13,7 @@ import { SpriteRenderer } from "../rendering/spriteRendering";
 export interface PlayerProps {
 	x: number;
 	y: number;
+	levelLoader: LevelLoader;
 }
 
 export class PlayerBuilder extends Builder<PlayerProps> {
@@ -24,7 +26,7 @@ export class PlayerBuilder extends Builder<PlayerProps> {
 		fall: this.createAnimation(4, 3, 0.1),
 
 		inanimate: this.createAnimation(5, 1, 1),
-		die: this.createAnimation(7, 5, 0.1),
+		die: this.createAnimation(7, 5, 0.1, "freeze"),
 		possess: this.createAnimation(8, 2, 0.1),
 
 		possessed_walk: this.createAnimation(6, 4, 0.15),
@@ -48,7 +50,7 @@ export class PlayerBuilder extends Builder<PlayerProps> {
 			}),
 		);
 		entity.addComponent(AnimatedSprite, new AnimatedSprite(entity, this.animations, "idle"));
-		entity.addComponent(PlayerBodyControls, new PlayerBodyControls(entity));
+		entity.addComponent(PlayerBodyControls, new PlayerBodyControls(entity, props.levelLoader));
 	}
 
 	private createAnimation(row: number, frameCount: number, duration: number, playback: "loop" | "freeze" = "loop") {
