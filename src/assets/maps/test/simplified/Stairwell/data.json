@@ -1,0 +1,162 @@
+{
+	"identifier": "Stairwell",
+	"uniqueIdentifer": "533764b0-73f0-11ef-82d8-51e80765f24e",
+	"x": 612,
+	"y": 180,
+	"width": 292,
+	"height": 385,
+	"bgColor": "#696A79",
+	"neighbourLevels": [],
+	"customFields": {
+		"track": "haunted_mansion_alt"
+	},
+	"layers": [
+		"Walls_Autolayer.png",
+		"Walls_Foreground_Autolayer.png",
+		"Manual_Tiles.png",
+		"Props.png"
+	],
+	"entities": {
+		"Door": [
+			{
+				"id": "Door",
+				"iid": "dbdcc710-73f0-11ef-82d8-cbeee14f9adc",
+				"layer": "Entities",
+				"x": 120,
+				"y": 36,
+				"width": 24,
+				"height": 24,
+				"color": 4073265,
+				"customFields": {
+					"Level": null
+				}
+			}
+		],
+		"Spikes": [
+			{
+				"id": "Spikes",
+				"iid": "e0967e90-73f0-11ef-82d8-cf7db3be825a",
+				"layer": "Entities",
+				"x": 36,
+				"y": 132,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "e1ae3020-73f0-11ef-82d8-7da68bec649c",
+				"layer": "Entities",
+				"x": 24,
+				"y": 84,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "e2ef62b0-73f0-11ef-82d8-d3a7cd3a3350",
+				"layer": "Entities",
+				"x": 48,
+				"y": 168,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "e4ce34d0-73f0-11ef-82d8-49641a0a0287",
+				"layer": "Entities",
+				"x": 108,
+				"y": 240,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "eb60a3f0-73f0-11ef-82d8-236a0d865f72",
+				"layer": "Entities",
+				"x": 228,
+				"y": 36,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "ecffadf0-73f0-11ef-82d8-65a67668ba44",
+				"layer": "Entities",
+				"x": 24,
+				"y": 48,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			}
+		],
+		"Player": [
+			{
+				"id": "Player",
+				"iid": "22d5e020-73f0-11ef-82d8-3f7146771d69",
+				"layer": "Entities",
+				"x": 45,
+				"y": 359,
+				"width": 24,
+				"height": 24,
+				"color": 12470831,
+				"customFields" : {}
+			}
+		],
+		"Switch": [
+			{
+				"id": "Switch",
+				"iid": "6112cc40-73f0-11ef-82d8-eb495248a819",
+				"layer": "Entities",
+				"x": 240,
+				"y": 144,
+				"width": 12,
+				"height": 12,
+				"color": 14120515,
+				"customFields": {
+					"Id": 1
+				}
+			}
+		],
+		"Trapdoor_Left": [
+			{
+				"id": "Trapdoor_Left",
+				"iid": "779806b0-73f0-11ef-82d8-4b84727fc4b5",
+				"layer": "Entities",
+				"x": 192,
+				"y": 288,
+				"width": 12,
+				"height": 24,
+				"color": 15389866,
+				"customFields": {
+					"Id": 1
+				}
+			}
+		],
+		"Trapdoor_Right": [
+			{
+				"id": "Trapdoor_Right",
+				"iid": "7cda7630-73f0-11ef-82d8-1fa6fe7e01fb",
+				"layer": "Entities",
+				"x": 216,
+				"y": 288,
+				"width": 12,
+				"height": 24,
+				"color": 14984818,
+				"customFields": {
+					"Id": 1
+				}
+			}
+		]
+	}
+}

@@ -1,0 +1,73 @@
+{
+	"identifier": "Booknook",
+	"uniqueIdentifer": "e9179b20-73f0-11ef-82d8-65a1f53257ac",
+	"x": 0,
+	"y": 180,
+	"width": 268,
+	"height": 256,
+	"bgColor": "#696A79",
+	"neighbourLevels": [],
+	"customFields": {
+		"track": "haunted_mansion_alt"
+	},
+	"layers": [
+		"Walls_Autolayer.png",
+		"Walls_Foreground_Autolayer.png",
+		"Manual_Tiles.png",
+		"Props.png"
+	],
+	"entities": {
+		"Player": [
+			{
+				"id": "Player",
+				"iid": "6772dd90-73f0-11ef-82d8-f57e6e4da3cf",
+				"layer": "Entities",
+				"x": 41,
+				"y": 228,
+				"width": 24,
+				"height": 24,
+				"color": 12470831,
+				"customFields" : {}
+			}
+		],
+		"Door": [
+			{
+				"id": "Door",
+				"iid": "908e16e0-73f0-11ef-82d8-ff196075b411",
+				"layer": "Entities",
+				"x": 204,
+				"y": 84,
+				"width": 24,
+				"height": 24,
+				"color": 4073265,
+				"customFields": {
+					"Level": "Trapdoor"
+				}
+			}
+		],
+		"Spikes": [
+			{
+				"id": "Spikes",
+				"iid": "dbe44880-73f0-11ef-82d8-4156d9deb394",
+				"layer": "Entities",
+				"x": 120,
+				"y": 108,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "dcc8dc20-73f0-11ef-82d8-37a909cbd23e",
+				"layer": "Entities",
+				"x": 24,
+				"y": 120,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			}
+		]
+	}
+}

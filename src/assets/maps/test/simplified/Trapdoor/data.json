@@ -1,0 +1,118 @@
+{
+	"identifier": "Trapdoor",
+	"uniqueIdentifer": "1860e700-73f0-11ef-82d8-290fe9846c48",
+	"x": 312,
+	"y": 180,
+	"width": 268,
+	"height": 220,
+	"bgColor": "#696A79",
+	"neighbourLevels": [],
+	"customFields": {
+		"track": "haunted_mansion_alt"
+	},
+	"layers": [
+		"Walls_Autolayer.png",
+		"Walls_Foreground_Autolayer.png",
+		"Manual_Tiles.png",
+		"Props.png"
+	],
+	"entities": {
+		"Switch": [
+			{
+				"id": "Switch",
+				"iid": "4272b550-73f0-11ef-82d8-5f5ff5b02352",
+				"layer": "Entities",
+				"x": 180,
+				"y": 60,
+				"width": 12,
+				"height": 12,
+				"color": 14120515,
+				"customFields": {
+					"Id": 1
+				}
+			}
+		],
+		"Trapdoor_Right": [
+			{
+				"id": "Trapdoor_Right",
+				"iid": "718d4580-73f0-11ef-82d8-3da71a90560d",
+				"layer": "Entities",
+				"x": 132,
+				"y": 96,
+				"width": 12,
+				"height": 24,
+				"color": 14984818,
+				"customFields": {
+					"Id": 1
+				}
+			}
+		],
+		"Trapdoor_Left": [
+			{
+				"id": "Trapdoor_Left",
+				"iid": "73ed0770-73f0-11ef-82d8-a3c650b85315",
+				"layer": "Entities",
+				"x": 108,
+				"y": 96,
+				"width": 12,
+				"height": 24,
+				"color": 15389866,
+				"customFields": {
+					"Id": 1
+				}
+			}
+		],
+		"Door": [
+			{
+				"id": "Door",
+				"iid": "9cc3bdb0-73f0-11ef-82d8-41c77220f247",
+				"layer": "Entities",
+				"x": 36,
+				"y": 180,
+				"width": 24,
+				"height": 24,
+				"color": 4073265,
+				"customFields": {
+					"Level": "Stairwell"
+				}
+			}
+		],
+		"Player": [
+			{
+				"id": "Player",
+				"iid": "e6bfdd90-73f0-11ef-82d8-8f7ba13b689d",
+				"layer": "Entities",
+				"x": 41,
+				"y": 84,
+				"width": 24,
+				"height": 24,
+				"color": 12470831,
+				"customFields" : {}
+			}
+		],
+		"Spikes": [
+			{
+				"id": "Spikes",
+				"iid": "13635670-73f0-11ef-82d8-315708db8482",
+				"layer": "Entities",
+				"x": 96,
+				"y": 180,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "14019240-73f0-11ef-82d8-9348f364fb86",
+				"layer": "Entities",
+				"x": 72,
+				"y": 192,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			}
+		]
+	}
+}

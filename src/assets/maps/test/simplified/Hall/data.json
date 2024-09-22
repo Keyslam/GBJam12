@@ -1,0 +1,106 @@
+{
+	"identifier": "Hall",
+	"uniqueIdentifer": "e5991830-73f0-11ef-82d8-fba357fdf9f2",
+	"x": 264,
+	"y": 0,
+	"width": 381,
+	"height": 153,
+	"bgColor": "#696A79",
+	"neighbourLevels": [],
+	"customFields": {
+		"track": "haunted_mansion_alt"
+	},
+	"layers": [
+		"Walls_Autolayer.png",
+		"Walls_Foreground_Autolayer.png",
+		"Manual_Tiles.png",
+		"Props.png"
+	],
+	"entities": {
+		"Player": [
+			{
+				"id": "Player",
+				"iid": "100cdca0-73f0-11ef-82d8-abb70dbdfff3",
+				"layer": "Entities",
+				"x": 29,
+				"y": 120,
+				"width": 24,
+				"height": 24,
+				"color": 12470831,
+				"customFields" : {}
+			}
+		],
+		"Door": [
+			{
+				"id": "Door",
+				"iid": "3b1c92f0-73f0-11ef-82d8-5fce6692a73c",
+				"layer": "Entities",
+				"x": 301,
+				"y": 108,
+				"width": 24,
+				"height": 24,
+				"color": 4073265,
+				"customFields": {
+					"Level": "Booknook"
+				}
+			}
+		],
+		"Spikes": [
+			{
+				"id": "Spikes",
+				"iid": "6d2b5ce0-73f0-11ef-82d8-7925aa049ba0",
+				"layer": "Entities",
+				"x": 120,
+				"y": 132,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "6e0b5ca0-73f0-11ef-82d8-73589976946b",
+				"layer": "Entities",
+				"x": 132,
+				"y": 132,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "6fa1db20-73f0-11ef-82d8-09cf14075d5e",
+				"layer": "Entities",
+				"x": 192,
+				"y": 132,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "702478a0-73f0-11ef-82d8-7bea5361f07e",
+				"layer": "Entities",
+				"x": 204,
+				"y": 132,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "7373cab0-73f0-11ef-82d8-b97b897a8dbe",
+				"layer": "Entities",
+				"x": 252,
+				"y": 120,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			}
+		]
+	}
+}

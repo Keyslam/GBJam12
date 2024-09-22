@@ -1,0 +1,49 @@
+{
+	"identifier": "Entry",
+	"uniqueIdentifer": "085236a0-73f0-11ef-82d8-25d18bf4a327",
+	"x": 0,
+	"y": 0,
+	"width": 256,
+	"height": 156,
+	"bgColor": "#696A79",
+	"neighbourLevels": [],
+	"customFields": {
+		"track": "haunted_mansion_alt"
+	},
+	"layers": [
+		"Walls_Autolayer.png",
+		"Walls_Foreground_Autolayer.png",
+		"Manual_Tiles.png",
+		"Props.png"
+	],
+	"entities": {
+		"Door": [
+			{
+				"id": "Door",
+				"iid": "3f0c6030-73f0-11ef-82d8-dbc6f3c460a6",
+				"layer": "Entities",
+				"x": 168,
+				"y": 108,
+				"width": 24,
+				"height": 24,
+				"color": 4073265,
+				"customFields": {
+					"Level": "Hall"
+				}
+			}
+		],
+		"Player": [
+			{
+				"id": "Player",
+				"iid": "d27e58f0-73f0-11ef-82d8-1fdf85c99ae1",
+				"layer": "Entities",
+				"x": 59,
+				"y": 120,
+				"width": 24,
+				"height": 24,
+				"color": 12470831,
+				"customFields" : {}
+			}
+		]
+	}
+}

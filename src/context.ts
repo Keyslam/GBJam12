@@ -18,7 +18,8 @@ export class Context {
 		this.scene.addEntity(new LevelLoaderBuilder(), undefined);
 		this.levelLoader = this.scene.findComponent(LevelLoader);
 
-		this.levelLoader.load("Level_0");
+		this.levelLoader.load("Entry");
+		// this.levelLoader.load("Trapdoor");
 	}
 
 	public update(dt: number): void {
