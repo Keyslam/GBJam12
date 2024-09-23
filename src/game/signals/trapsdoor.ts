@@ -15,19 +15,21 @@ export class Trapdoor extends Component {
 	private openSprite: Sprite;
 	private signalId: number;
 	private key: number;
+	private invert: boolean;
 
-	constructor(entity: Entity, closedSprite: Sprite, openSprite: Sprite, signalId: number, key: number) {
+	constructor(entity: Entity, closedSprite: Sprite, openSprite: Sprite, signalId: number, key: number, invert: boolean = false) {
 		super(entity);
 
 		this.closedSprite = closedSprite;
 		this.openSprite = openSprite;
 		this.signalId = signalId;
 		this.key = key;
+		this.invert = invert;
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	public override update(dt: number): void {
-		const open = this.signalStore.isSignalSet(this.signalId);
+		const open = this.signalStore.isSignalSet(this.signalId) !== this.invert;
 		this.spriteRenderer.sprite = open ? this.openSprite : this.closedSprite;
 		this.tilemap.getTile(this.key).state = open ? "open" : "solid";
 	}

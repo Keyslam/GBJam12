@@ -36,7 +36,9 @@
 				"width": 20,
 				"height": 20,
 				"color": 15349948,
-				"customFields" : {}
+				"customFields": {
+					"Flipped": false
+				}
 			}
 		],
 		"Trapdoor_Left": [
@@ -174,7 +176,8 @@
 				"height": 24,
 				"color": 4073265,
 				"customFields": {
-					"Level": "Level_1"
+					"Level": "Level_1",
+					"Visible": true
 				}
 			}
 		],

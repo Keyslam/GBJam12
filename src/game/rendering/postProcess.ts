@@ -12,7 +12,7 @@ export class PostProcess extends Component {
 	private palettesImageData = love.image.newImageData("assets/gbpals.png");
 
 	public paletteIndex = 0;
-	private paletteOffset = 3;
+	public paletteOffset = 3;
 
 	private backgroundColors: { r: number; g: number; b: number }[] = [];
 
@@ -45,7 +45,7 @@ export class PostProcess extends Component {
 		this.shader.send("pal", this.paletteIndex);
 	}
 
-	public detatch(): void {
+	public detach(): void {
 		love.graphics.pop();
 	}
 

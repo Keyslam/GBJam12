@@ -235,10 +235,10 @@ export class PlayerBodyControls extends Component {
 		if (this.state === "dead") {
 			this.animatedSprite.play("die");
 			this.camera.doLerp = true;
+		}
 
-			if (this.input.buttonStartState.isPressed) {
-				this.levelLoader.reload();
-			}
+		if (this.input.buttonStartState.isPressed) {
+			this.levelLoader.reload();
 		}
 	}
 
@@ -295,6 +295,8 @@ export class PlayerBodyControls extends Component {
 
 		this.camera.target = this.entity;
 		this.camera.doLerp = true;
+
+		this.scheduler.waitForSeconds(1).then(() => this.levelLoader.load("death"));
 	}
 
 	public possess(): void {

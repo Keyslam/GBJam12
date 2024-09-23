@@ -28,7 +28,8 @@
 				"height": 24,
 				"color": 4073265,
 				"customFields": {
-					"Level": "Hall"
+					"Level": "Hall",
+					"Visible": true
 				}
 			}
 		],
@@ -43,6 +44,21 @@
 				"height": 24,
 				"color": 12470831,
 				"customFields" : {}
+			}
+		],
+		"Control": [
+			{
+				"id": "Control",
+				"iid": "035fdff0-73f0-11ef-88a1-37a2b4c28db7",
+				"layer": "Entities",
+				"x": 12,
+				"y": 72,
+				"width": 128,
+				"height": 25,
+				"color": 16705377,
+				"customFields": {
+					"Kind": 1
+				}
 			}
 		]
 	}

@@ -4,7 +4,7 @@
 	"x": 612,
 	"y": 180,
 	"width": 292,
-	"height": 385,
+	"height": 417,
 	"bgColor": "#696A79",
 	"neighbourLevels": [],
 	"customFields": {
@@ -28,7 +28,8 @@
 				"height": 24,
 				"color": 4073265,
 				"customFields": {
-					"Level": null
+					"Level": "Pit",
+					"Visible": true
 				}
 			}
 		],
@@ -100,19 +101,6 @@
 				"customFields" : {}
 			}
 		],
-		"Player": [
-			{
-				"id": "Player",
-				"iid": "22d5e020-73f0-11ef-82d8-3f7146771d69",
-				"layer": "Entities",
-				"x": 45,
-				"y": 359,
-				"width": 24,
-				"height": 24,
-				"color": 12470831,
-				"customFields" : {}
-			}
-		],
 		"Switch": [
 			{
 				"id": "Switch",
@@ -156,6 +144,34 @@
 				"customFields": {
 					"Id": 1
 				}
+			}
+		],
+		"Control": [
+			{
+				"id": "Control",
+				"iid": "3786b470-73f0-11ef-88a1-451c6cd9f96d",
+				"layer": "Entities",
+				"x": 48,
+				"y": 336,
+				"width": 128,
+				"height": 25,
+				"color": 16705377,
+				"customFields": {
+					"Kind": 3
+				}
+			}
+		],
+		"Player": [
+			{
+				"id": "Player",
+				"iid": "22d5e020-73f0-11ef-82d8-3f7146771d69",
+				"layer": "Entities",
+				"x": 60,
+				"y": 384,
+				"width": 24,
+				"height": 24,
+				"color": 12470831,
+				"customFields" : {}
 			}
 		]
 	}

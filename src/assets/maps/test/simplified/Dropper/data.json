@@ -1,0 +1,316 @@
+{
+	"identifier": "Dropper",
+	"uniqueIdentifer": "c3867bb0-73f0-11ef-9932-edd4950e403e",
+	"x": 468,
+	"y": 912,
+	"width": 424,
+	"height": 486,
+	"bgColor": "#696A79",
+	"neighbourLevels": [],
+	"customFields": {
+		"track": "haunted_mansion_alt"
+	},
+	"layers": [
+		"Walls_Autolayer.png",
+		"Walls_Foreground_Autolayer.png",
+		"Manual_Tiles.png",
+		"Props.png"
+	],
+	"entities": {
+		"Block": [
+			{
+				"id": "Block",
+				"iid": "e26e7870-73f0-11ef-9932-7ba6009894b6",
+				"layer": "Entities",
+				"x": 132,
+				"y": 120,
+				"width": 12,
+				"height": 12,
+				"color": 16690740,
+				"customFields": {
+					"Id": 0,
+					"Invert": true
+				}
+			},
+			{
+				"id": "Block",
+				"iid": "e2ca5410-73f0-11ef-9932-0f8f599423cd",
+				"layer": "Entities",
+				"x": 144,
+				"y": 120,
+				"width": 12,
+				"height": 12,
+				"color": 16690740,
+				"customFields": {
+					"Id": 0,
+					"Invert": true
+				}
+			},
+			{
+				"id": "Block",
+				"iid": "e3a3c420-73f0-11ef-9932-833f6ce1d46d",
+				"layer": "Entities",
+				"x": 156,
+				"y": 120,
+				"width": 12,
+				"height": 12,
+				"color": 16690740,
+				"customFields": {
+					"Id": 0,
+					"Invert": true
+				}
+			},
+			{
+				"id": "Block",
+				"iid": "e4a9e980-73f0-11ef-9932-2def0df75208",
+				"layer": "Entities",
+				"x": 168,
+				"y": 120,
+				"width": 12,
+				"height": 12,
+				"color": 16690740,
+				"customFields": {
+					"Id": 0,
+					"Invert": true
+				}
+			},
+			{
+				"id": "Block",
+				"iid": "e55803d0-73f0-11ef-9932-1b9c0d797891",
+				"layer": "Entities",
+				"x": 180,
+				"y": 120,
+				"width": 12,
+				"height": 12,
+				"color": 16690740,
+				"customFields": {
+					"Id": 0,
+					"Invert": true
+				}
+			},
+			{
+				"id": "Block",
+				"iid": "e621e380-73f0-11ef-9932-fb11be079ed3",
+				"layer": "Entities",
+				"x": 192,
+				"y": 120,
+				"width": 12,
+				"height": 12,
+				"color": 16690740,
+				"customFields": {
+					"Id": 0,
+					"Invert": true
+				}
+			},
+			{
+				"id": "Block",
+				"iid": "e7614150-73f0-11ef-9932-0bcf0d35c7fc",
+				"layer": "Entities",
+				"x": 204,
+				"y": 120,
+				"width": 12,
+				"height": 12,
+				"color": 16690740,
+				"customFields": {
+					"Id": 0,
+					"Invert": true
+				}
+			},
+			{
+				"id": "Block",
+				"iid": "e848bb20-73f0-11ef-9932-17095117bac6",
+				"layer": "Entities",
+				"x": 216,
+				"y": 120,
+				"width": 12,
+				"height": 12,
+				"color": 16690740,
+				"customFields": {
+					"Id": 0,
+					"Invert": true
+				}
+			},
+			{
+				"id": "Block",
+				"iid": "e8f15730-73f0-11ef-9932-b74674892af8",
+				"layer": "Entities",
+				"x": 228,
+				"y": 120,
+				"width": 12,
+				"height": 12,
+				"color": 16690740,
+				"customFields": {
+					"Id": 0,
+					"Invert": true
+				}
+			}
+		],
+		"Switch": [
+			{
+				"id": "Switch",
+				"iid": "ecf7eb50-73f0-11ef-9932-df676adc864a",
+				"layer": "Entities",
+				"x": 180,
+				"y": 108,
+				"width": 12,
+				"height": 12,
+				"color": 14120515,
+				"customFields": {
+					"Id": 0
+				}
+			}
+		],
+		"Spikes": [
+			{
+				"id": "Spikes",
+				"iid": "4c2a3060-73f0-11ef-9932-7da353499884",
+				"layer": "Entities",
+				"x": 192,
+				"y": 372,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "4cdae2c0-73f0-11ef-9932-7d7890733800",
+				"layer": "Entities",
+				"x": 216,
+				"y": 360,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "4cfe2230-73f0-11ef-9932-2de2bd7093f3",
+				"layer": "Entities",
+				"x": 204,
+				"y": 360,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "4db1bac0-73f0-11ef-9932-917af2918b3d",
+				"layer": "Entities",
+				"x": 228,
+				"y": 336,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "4e831480-73f0-11ef-9932-c3bd496c17a4",
+				"layer": "Entities",
+				"x": 240,
+				"y": 312,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "50063210-73f0-11ef-9932-f5800d07a202",
+				"layer": "Entities",
+				"x": 168,
+				"y": 240,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "50e45d10-73f0-11ef-9932-151a0cdaa469",
+				"layer": "Entities",
+				"x": 180,
+				"y": 240,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "52c5ee50-73f0-11ef-9932-093f862f1909",
+				"layer": "Entities",
+				"x": 156,
+				"y": 228,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "53bd46a0-73f0-11ef-9932-719b53294462",
+				"layer": "Entities",
+				"x": 144,
+				"y": 228,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "547b1860-73f0-11ef-9932-6739a40457d0",
+				"layer": "Entities",
+				"x": 132,
+				"y": 228,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			},
+			{
+				"id": "Spikes",
+				"iid": "5524c5e0-73f0-11ef-9932-5735a56d42f4",
+				"layer": "Entities",
+				"x": 120,
+				"y": 204,
+				"width": 12,
+				"height": 12,
+				"color": 7552569,
+				"customFields" : {}
+			}
+		],
+		"Player": [
+			{
+				"id": "Player",
+				"iid": "e5683b00-73f0-11ef-9932-19671eba27e0",
+				"layer": "Entities",
+				"x": 69,
+				"y": 96,
+				"width": 24,
+				"height": 24,
+				"color": 12470831,
+				"customFields" : {}
+			}
+		],
+		"Door": [
+			{
+				"id": "Door",
+				"iid": "b86bfa20-73f0-11ef-b870-13db5142efe8",
+				"layer": "Entities",
+				"x": 160,
+				"y": 451,
+				"width": 24,
+				"height": 24,
+				"color": 4073265,
+				"customFields": {
+					"Level": "KitchenEntry",
+					"Visible": false
+				}
+			}
+		]
+	}
+}

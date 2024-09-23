@@ -7,6 +7,6 @@ export class Mass extends Component {
 	public gravity = 800;
 
 	public override update(dt: number): void {
-		this.velocity.y += this.gravity * dt;
+		this.velocity.y = Math.min(200, this.velocity.y + this.gravity * dt);
 	}
 }

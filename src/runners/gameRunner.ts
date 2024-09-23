@@ -11,6 +11,8 @@ export class Game implements Runner {
 		love.window.setMode(scaleFactor * 160, scaleFactor * 144, {
 			resizable: true,
 		});
+		love.window.setTitle("Spectral Shift");
+		love.window.setIcon(love.image.newImageData("assets/icon.png"));
 
 		love.graphics.setDefaultFilter("nearest", "nearest");
 

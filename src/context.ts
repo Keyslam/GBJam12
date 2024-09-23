@@ -2,8 +2,10 @@ import { Scene } from "./core/scene";
 import { Scheduler } from "./core/scheduler";
 import { LevelLoaderBuilder } from "./game/builders/levelLoaderBuilder";
 import { LevelLoader } from "./game/levels/levelLoader";
+import { PlayerBodyControls } from "./game/locomotion/playerBodyControls";
 import { Camera } from "./game/rendering/camera";
 import { PostProcess } from "./game/rendering/postProcess";
+import { SpriteRenderer } from "./game/rendering/spriteRendering";
 
 export class Context {
 	private canvas = love.graphics.newCanvas(160, 144);
@@ -18,8 +20,8 @@ export class Context {
 		this.scene.addEntity(new LevelLoaderBuilder(), undefined);
 		this.levelLoader = this.scene.findComponent(LevelLoader);
 
-		this.levelLoader.load("Entry");
-		// this.levelLoader.load("Trapdoor");
+		this.levelLoader.load("splash");
+		// this.levelLoader.load("KitchenEntry");
 	}
 
 	public update(dt: number): void {
@@ -33,6 +35,7 @@ export class Context {
 		}
 
 		this.levelLoader.handleReload();
+		6;
 		this.levelLoader.handleLoad();
 	}
 
@@ -48,7 +51,13 @@ export class Context {
 		love.graphics.setColor(1, 1, 1, 1);
 
 		this.scene.draw();
-		postProcess.detatch();
+
+		const player = this.scene.tryFindChildByComponent(PlayerBodyControls);
+		if (player) {
+			player.getComponent(SpriteRenderer).draw();
+		}
+
+		postProcess.detach();
 		camera.detach();
 
 		this.scene.drawScreen();

@@ -1,17 +1,25 @@
 import { Source } from "love.audio";
 import { Component } from "../../core/component";
 import { Entity } from "../../core/entity";
+import { Scheduler } from "../../core/scheduler";
+import { BlockBuilder } from "../builders/blockBuilder";
 import { CameraBuilder } from "../builders/cameraBuilder";
+import { ControlBuilder } from "../builders/controlBuilder";
+import { DeathBuilder } from "../builders/deathBuilder";
 import { DoorBuilder } from "../builders/doorBuilder";
 import { EnemyGhostBuilder } from "../builders/enemyGhostBuilder";
+import { FinishBuilder } from "../builders/finishBuilder";
 import { InputBuilder } from "../builders/inputBuilder";
+import { KissthechefBuilder } from "../builders/kissthechefBuilder";
 import { PlayerBuilder } from "../builders/playerBuilder";
 import { PostProcessBuilder } from "../builders/postProcessBuilder";
 import { SchedulerBuilder } from "../builders/schedulerBuilder";
 import { SignalStoreBuilder } from "../builders/signalStoreBuilder";
 import { SpikesBuilder } from "../builders/spikesBuilder";
+import { SplashBuilder } from "../builders/splashBuilder";
 import { SwitchBuilder } from "../builders/switchBuilder";
 import { TilemapBuilder } from "../builders/tilemapBuilder";
+import { TitleBuilder } from "../builders/titleBuilder";
 import { TrapdoorBuilder } from "../builders/trapdoorBuilder";
 import { Position } from "../common/position";
 import { PlayerBodyControls } from "../locomotion/playerBodyControls";
@@ -30,6 +38,8 @@ export class LevelLoader extends Component {
 	private switchBuilder = new SwitchBuilder();
 	private spikeBuilder = new SpikesBuilder();
 	private doorBuilder = new DoorBuilder();
+	private blockBuilder = new BlockBuilder();
+	private splashBuilder = new SplashBuilder();
 
 	private layers: LdtkLayer[] = [];
 	private entities: LdtkEntity[] = [];
@@ -49,6 +59,7 @@ export class LevelLoader extends Component {
 	}
 
 	private name: string = "";
+	private previousName: string = "";
 	private willLoad = false;
 	private loadedOnce = false;
 
@@ -57,6 +68,9 @@ export class LevelLoader extends Component {
 			return;
 		}
 
+		if (this.name !== "death") {
+			this.previousName = this.name;
+		}
 		this.name = name;
 		this.willLoad = true;
 	}
@@ -119,24 +133,77 @@ export class LevelLoader extends Component {
 			this.scene.addEntity(new SignalStoreBuilder(), undefined);
 			this.scene.addEntity(new TilemapBuilder(), undefined);
 			this.scene.addEntity(new PostProcessBuilder(), undefined).getComponent(PostProcess);
-			this.scene
-				.addEntity(new CameraBuilder(), {
-					x: 80,
-					y: 72,
-				})
-				.getComponent(Camera);
+			this.scene.addEntity(new CameraBuilder(), {
+				x: 80,
+				y: 72,
+			});
 
 			this.signalStore = this.scene.findComponent(SignalStore);
 			this.tilemap = this.scene.findComponent(Tilemap);
 
-			// const scheduler = this.scene.findComponent(Scheduler);
-			ldtk.level(this.name);
+			let doFade = true;
+
+			if (this.name === "splash") {
+				this.scene.addEntity(this.splashBuilder, undefined);
+
+				const camera = this.scene.findComponent(Camera);
+				camera.offsetX = 80;
+				camera.offsetY = 72;
+
+				const scheduler = this.scene.findComponent(Scheduler);
+
+				scheduler.waitForSeconds(0.4).then(() => {
+					love.audio.newSource("assets/sfx/wave_hurt_1.wav", "stream").play();
+				});
+
+				scheduler.waitForSeconds(1.25).then(() => {
+					love.audio.newSource("assets/sfx/wave_collect_1.wav", "stream").play();
+				});
+
+				scheduler.waitForSeconds(2.9).then(() => {
+					love.audio.newSource("assets/sfx/noise_lightning_1.wav", "stream").play();
+				});
+
+				scheduler.waitForSeconds(3).then(() => {
+					this.load("title");
+				});
+
+				doFade = false;
+			} else if (this.name === "title") {
+				this.scene.addEntity(new TitleBuilder(), { levelLoader: this });
+
+				const camera = this.scene.findComponent(Camera);
+				camera.offsetX = 80;
+				camera.offsetY = 72;
+			} else if (this.name === "death") {
+				this.scene.addEntity(new DeathBuilder(), { levelLoader: this, name: this.previousName });
+
+				const camera = this.scene.findComponent(Camera);
+				camera.offsetX = 80;
+				camera.offsetY = 72;
+			} else if (this.name === "finish") {
+				this.scene.addEntity(new FinishBuilder(), undefined);
+
+				const camera = this.scene.findComponent(Camera);
+				camera.offsetX = 80;
+				camera.offsetY = 72;
+
+				this.track?.stop();
+				love.audio.newSource("assets/music/spooky_month_alt.ogg", "stream").play();
+			} else {
+				ldtk.level(this.name);
+			}
 
 			this.scene.update(0);
 
-			const postProcess = this.scene.findComponent(PostProcess);
-			postProcess.paletteIndex = paletteIndex;
-			await postProcess.fadeIn();
+			if (doFade) {
+				const postProcess = this.scene.findComponent(PostProcess);
+				postProcess.paletteIndex = paletteIndex;
+				await postProcess.fadeIn();
+			} else {
+				const postProcess = this.scene.findComponent(PostProcess);
+				postProcess.paletteOffset = 0;
+			}
 
 			this.loadedOnce = true;
 			this.loading = false;
@@ -188,7 +255,7 @@ export class LevelLoader extends Component {
 				this.scene.addEntity(this.enemyGhostBuilder, {
 					x: entity.x,
 					y: entity.y,
-					flipped: false,
+					flipped: entity.props["Flipped"],
 					playerBody: playerBody,
 				});
 			}
@@ -220,6 +287,21 @@ export class LevelLoader extends Component {
 				kyo = 1;
 			}
 
+			if (entity.id === "Block") {
+				const signalId = entity.props["Id"];
+				this.signalStore.registerSignal(signalId);
+
+				this.scene.addEntity(this.blockBuilder, {
+					x: entity.x,
+					y: entity.y,
+					signalId: signalId,
+					key: entity.x / 12 + (entity.y / 12) * width,
+					invert: entity.props["Invert"],
+				});
+
+				bb = { x: 0, y: 0, w: 12, h: 12 };
+			}
+
 			if (entity.id === "Spikes") {
 				this.scene.addEntity(this.spikeBuilder, {
 					x: entity.x,
@@ -233,6 +315,22 @@ export class LevelLoader extends Component {
 					y: entity.y,
 					level: entity.props["Level"],
 					levelLoader: this,
+					visible: entity.props["Visible"],
+				});
+			}
+
+			if (entity.id === "Control") {
+				this.scene.addEntity(new ControlBuilder(), {
+					x: entity.x,
+					y: entity.y,
+					kind: entity.props["Kind"],
+				});
+			}
+
+			if (entity.id === "KissTheChef") {
+				this.scene.addEntity(new KissthechefBuilder(), {
+					x: entity.x,
+					y: entity.y,
 				});
 			}
 

@@ -41,7 +41,8 @@
 				"height": 24,
 				"color": 4073265,
 				"customFields": {
-					"Level": "Booknook"
+					"Level": "Booknook",
+					"Visible": true
 				}
 			}
 		],
@@ -100,6 +101,21 @@
 				"height": 12,
 				"color": 7552569,
 				"customFields" : {}
+			}
+		],
+		"Control": [
+			{
+				"id": "Control",
+				"iid": "1411dc90-73f0-11ef-88a1-350ccfdf3136",
+				"layer": "Entities",
+				"x": 48,
+				"y": 72,
+				"width": 128,
+				"height": 25,
+				"color": 16705377,
+				"customFields": {
+					"Kind": 2
+				}
 			}
 		]
 	}

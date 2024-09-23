@@ -5,8 +5,8 @@ import { Position } from "../common/position";
 export class Camera extends Component {
 	public position = this.inject(Position);
 
-	private offsetX = 80;
-	private offsetY = 72 + 12;
+	public offsetX = 80;
+	public offsetY = 72 + 12;
 
 	private _target: Entity | undefined;
 	/* prettier-ignore */ public get target() { return this._target; }

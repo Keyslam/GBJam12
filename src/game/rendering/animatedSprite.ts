@@ -7,7 +7,7 @@ export class AnimatedSprite extends Component {
 	private spriteRenderer = this.inject(SpriteRenderer);
 
 	private animations: Record<string, Animation>;
-	private activeAnimationName: string;
+	public activeAnimationName: string;
 
 	private currentDuration: number;
 	private currentFrameIndex: number;

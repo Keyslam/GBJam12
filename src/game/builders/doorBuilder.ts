@@ -11,6 +11,7 @@ export interface DoorProps {
 	y: number;
 	level: string;
 	levelLoader: LevelLoader;
+	visible: boolean;
 }
 
 export class DoorBuilder extends Builder<DoorProps> {
@@ -27,7 +28,9 @@ export class DoorBuilder extends Builder<DoorProps> {
 
 	public build(entity: Entity, props: DoorProps): void {
 		entity.addComponent(Position, new Position(entity, props.x, props.y));
-		entity.addComponent(SpriteRenderer, new SpriteRenderer(entity, this.sprite));
+		if (props.visible) {
+			entity.addComponent(SpriteRenderer, new SpriteRenderer(entity, this.sprite));
+		}
 		entity.addComponent(Door, new Door(entity, props.level, props.levelLoader));
 	}
 }

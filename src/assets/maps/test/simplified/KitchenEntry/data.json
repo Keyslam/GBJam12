@@ -1,0 +1,63 @@
+{
+	"identifier": "KitchenEntry",
+	"uniqueIdentifer": "345b6cb0-73f0-11ef-b870-59409f291e34",
+	"x": 60,
+	"y": 1440,
+	"width": 292,
+	"height": 160,
+	"bgColor": "#696A79",
+	"neighbourLevels": [],
+	"customFields": {
+		"track": "somthin_on_my_mind_alt"
+	},
+	"layers": [
+		"Walls_Autolayer.png",
+		"Walls_Foreground_Autolayer.png",
+		"Manual_Tiles.png",
+		"Props.png"
+	],
+	"entities": {
+		"Player": [
+			{
+				"id": "Player",
+				"iid": "392e0360-73f0-11ef-b870-d33a730c3857",
+				"layer": "Entities",
+				"x": 60,
+				"y": 12,
+				"width": 24,
+				"height": 24,
+				"color": 12470831,
+				"customFields" : {}
+			}
+		],
+		"Door": [
+			{
+				"id": "Door",
+				"iid": "993c9eb0-73f0-11ef-b870-bdb6dd7f4b4c",
+				"layer": "Entities",
+				"x": 252,
+				"y": 120,
+				"width": 24,
+				"height": 24,
+				"color": 4073265,
+				"customFields": {
+					"Level": "finish",
+					"Visible": true
+				}
+			}
+		],
+		"KissTheChef": [
+			{
+				"id": "KissTheChef",
+				"iid": "bdcec940-73f0-11ef-b870-d9b6ef2bedfe",
+				"layer": "Entities",
+				"x": 108,
+				"y": 96,
+				"width": 24,
+				"height": 24,
+				"color": 6539085,
+				"customFields" : {}
+			}
+		]
+	}
+}

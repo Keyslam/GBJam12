@@ -73,7 +73,8 @@
 				"height": 24,
 				"color": 4073265,
 				"customFields": {
-					"Level": "Stairwell"
+					"Level": "Stairwell",
+					"Visible": true
 				}
 			}
 		],
@@ -91,17 +92,6 @@
 			}
 		],
 		"Spikes": [
-			{
-				"id": "Spikes",
-				"iid": "13635670-73f0-11ef-82d8-315708db8482",
-				"layer": "Entities",
-				"x": 96,
-				"y": 180,
-				"width": 12,
-				"height": 12,
-				"color": 7552569,
-				"customFields" : {}
-			},
 			{
 				"id": "Spikes",
 				"iid": "14019240-73f0-11ef-82d8-9348f364fb86",
