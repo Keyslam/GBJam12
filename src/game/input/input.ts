@@ -1,3 +1,4 @@
+import { GamepadButton } from "love.joystick";
 import { KeyConstant } from "love.keyboard";
 import { Component } from "../../core/component";
 
@@ -17,20 +18,42 @@ export class Input extends Component {
 	public buttonSelectState = { isDown: false, isPressed: false, isReleased: false };
 	public buttonStartState = { isDown: false, isPressed: false, isReleased: false };
 
+	private joystick = love.joystick.getJoysticks()[0];
+
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	public override update(dt: number): void {
-		this.updateButtonState(this.buttonAState, "z");
-		this.updateButtonState(this.buttonBState, "x");
-		this.updateButtonState(this.buttonUpState, "up");
-		this.updateButtonState(this.buttonDownState, "down");
-		this.updateButtonState(this.buttonLeftState, "left");
-		this.updateButtonState(this.buttonRightState, "right");
-		this.updateButtonState(this.buttonSelectState, "rshift");
-		this.updateButtonState(this.buttonStartState, "return");
+		if (this.joystick !== undefined) {
+			this.updateButtonStateFromJoystick(this.buttonAState, "a");
+			this.updateButtonStateFromJoystick(this.buttonBState, "b");
+			this.updateButtonStateFromJoystick(this.buttonUpState, "dpup");
+			this.updateButtonStateFromJoystick(this.buttonDownState, "dpdown");
+			this.updateButtonStateFromJoystick(this.buttonLeftState, "dpleft");
+			this.updateButtonStateFromJoystick(this.buttonRightState, "dpright");
+			this.updateButtonStateFromJoystick(this.buttonSelectState, "guide");
+			this.updateButtonStateFromJoystick(this.buttonStartState, "start");
+		} else {
+			this.updateButtonStateFromKeyboard(this.buttonAState, "z");
+			this.updateButtonStateFromKeyboard(this.buttonBState, "x");
+			this.updateButtonStateFromKeyboard(this.buttonUpState, "up");
+			this.updateButtonStateFromKeyboard(this.buttonDownState, "down");
+			this.updateButtonStateFromKeyboard(this.buttonLeftState, "left");
+			this.updateButtonStateFromKeyboard(this.buttonRightState, "right");
+			this.updateButtonStateFromKeyboard(this.buttonSelectState, "rshift");
+			this.updateButtonStateFromKeyboard(this.buttonStartState, "return");
+		}
 	}
 
-	private updateButtonState(buttonState: ButtonState, key: KeyConstant) {
+	private updateButtonStateFromKeyboard(buttonState: ButtonState, key: KeyConstant) {
 		const isDown = love.keyboard.isDown(key);
+		const wasDown = buttonState.isDown;
+
+		buttonState.isDown = isDown;
+		buttonState.isPressed = !wasDown && isDown;
+		buttonState.isReleased = wasDown && !isDown;
+	}
+
+	private updateButtonStateFromJoystick(buttonState: ButtonState, button: GamepadButton) {
+		const isDown = this.joystick.isGamepadDown(button);
 		const wasDown = buttonState.isDown;
 
 		buttonState.isDown = isDown;

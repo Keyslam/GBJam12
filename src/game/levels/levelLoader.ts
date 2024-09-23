@@ -9,6 +9,7 @@ import { DeathBuilder } from "../builders/deathBuilder";
 import { DoorBuilder } from "../builders/doorBuilder";
 import { EnemyGhostBuilder } from "../builders/enemyGhostBuilder";
 import { FinishBuilder } from "../builders/finishBuilder";
+import { FireworkBuilder } from "../builders/fireworkBuilder";
 import { InputBuilder } from "../builders/inputBuilder";
 import { KissthechefBuilder } from "../builders/kissthechefBuilder";
 import { PlayerBuilder } from "../builders/playerBuilder";
@@ -189,7 +190,10 @@ export class LevelLoader extends Component {
 				camera.offsetY = 72;
 
 				this.track?.stop();
-				love.audio.newSource("assets/music/spooky_month_alt.ogg", "stream").play();
+				const t = love.audio.newSource("assets/music/spooky_month_alt.ogg", "stream");
+				t.setVolume(0.7);
+				t.setLooping(true);
+				t.play();
 			} else {
 				ldtk.level(this.name);
 			}
@@ -329,6 +333,13 @@ export class LevelLoader extends Component {
 
 			if (entity.id === "KissTheChef") {
 				this.scene.addEntity(new KissthechefBuilder(), {
+					x: entity.x,
+					y: entity.y,
+				});
+			}
+
+			if (entity.id === "Firework") {
+				this.scene.addEntity(new FireworkBuilder(), {
 					x: entity.x,
 					y: entity.y,
 				});

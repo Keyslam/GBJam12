@@ -38,7 +38,7 @@ export class Switch extends Component {
 			const dy = this.position.y + 6 - this.playerPosition.y;
 			const distance = Math.sqrt(dx * dx + dy * dy);
 
-			if (distance <= 10) {
+			if (distance <= 14) {
 				if (this.bodyWasNear == false) {
 					this.bodyWasNear = true;
 
@@ -66,7 +66,7 @@ export class Switch extends Component {
 				const dy = this.position.y + 6 - ghostPosition.y;
 				const distance = Math.sqrt(dx * dx + dy * dy);
 
-				if (distance <= 10) {
+				if (distance <= 14) {
 					if (this.ghostWasNear == false) {
 						this.ghostWasNear = true;
 

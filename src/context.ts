@@ -20,8 +20,8 @@ export class Context {
 		this.scene.addEntity(new LevelLoaderBuilder(), undefined);
 		this.levelLoader = this.scene.findComponent(LevelLoader);
 
-		// this.levelLoader.load("Exit");
-		this.levelLoader.load("Mousetrap");
+		this.levelLoader.load("splash");
+		// this.levelLoader.load("Secret");
 	}
 
 	public update(dt: number): void {
