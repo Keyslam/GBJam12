@@ -22,6 +22,8 @@ export class Input extends Component {
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	public override update(dt: number): void {
+		this.joystick = love.joystick.getJoysticks()[0];
+
 		if (this.joystick !== undefined) {
 			this.updateButtonStateFromJoystick(this.buttonAState, "a");
 			this.updateButtonStateFromJoystick(this.buttonBState, "b");
@@ -29,7 +31,7 @@ export class Input extends Component {
 			this.updateButtonStateFromJoystick(this.buttonDownState, "dpdown");
 			this.updateButtonStateFromJoystick(this.buttonLeftState, "dpleft");
 			this.updateButtonStateFromJoystick(this.buttonRightState, "dpright");
-			this.updateButtonStateFromJoystick(this.buttonSelectState, "guide");
+			this.updateButtonStateFromJoystick(this.buttonSelectState, "back");
 			this.updateButtonStateFromJoystick(this.buttonStartState, "start");
 		} else {
 			this.updateButtonStateFromKeyboard(this.buttonAState, "z");

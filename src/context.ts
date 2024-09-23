@@ -20,7 +20,7 @@ export class Context {
 		this.scene.addEntity(new LevelLoaderBuilder(), undefined);
 		this.levelLoader = this.scene.findComponent(LevelLoader);
 
-		this.levelLoader.load("splash");
+		this.levelLoader.load("Password");
 		// this.levelLoader.load("Secret");
 	}
 
