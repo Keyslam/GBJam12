@@ -1,0 +1,117 @@
+{
+	"identifier": "Exit",
+	"uniqueIdentifer": "39695f40-73f0-11ef-bb6f-03fcdf3e3cfc",
+	"x": 216,
+	"y": 2448,
+	"width": 616,
+	"height": 184,
+	"bgColor": "#696A79",
+	"neighbourLevels": [],
+	"customFields": {
+		"track": "somthin_on_my_mind_alt"
+	},
+	"layers": [
+		"Walls_Autolayer.png",
+		"Walls_Foreground_Autolayer.png",
+		"Manual_Tiles.png",
+		"Props.png"
+	],
+	"entities": {
+		"Player": [
+			{
+				"id": "Player",
+				"iid": "1704fe40-73f0-11ef-bb6f-0f4e8cf6e93c",
+				"layer": "Entities",
+				"x": 60,
+				"y": 132,
+				"width": 24,
+				"height": 24,
+				"color": 12470831,
+				"customFields" : {}
+			}
+		],
+		"EnemyGhost": [
+			{
+				"id": "EnemyGhost",
+				"iid": "195c0da0-73f0-11ef-bb6f-7547f38edbcd",
+				"layer": "Entities",
+				"x": 154,
+				"y": 67,
+				"width": 20,
+				"height": 20,
+				"color": 15349948,
+				"customFields": {
+					"Flipped": true
+				}
+			},
+			{
+				"id": "EnemyGhost",
+				"iid": "1b20ef20-73f0-11ef-bb6f-f71eea357269",
+				"layer": "Entities",
+				"x": 217,
+				"y": 63,
+				"width": 20,
+				"height": 20,
+				"color": 15349948,
+				"customFields": {
+					"Flipped": false
+				}
+			},
+			{
+				"id": "EnemyGhost",
+				"iid": "1bbb8170-73f0-11ef-bb6f-33bffe291b1f",
+				"layer": "Entities",
+				"x": 244,
+				"y": 60,
+				"width": 20,
+				"height": 20,
+				"color": 15349948,
+				"customFields": {
+					"Flipped": true
+				}
+			},
+			{
+				"id": "EnemyGhost",
+				"iid": "1de629a0-73f0-11ef-bb6f-bd86452a83ae",
+				"layer": "Entities",
+				"x": 374,
+				"y": 81,
+				"width": 20,
+				"height": 20,
+				"color": 15349948,
+				"customFields": {
+					"Flipped": false
+				}
+			},
+			{
+				"id": "EnemyGhost",
+				"iid": "1f1b7550-73f0-11ef-bb6f-c34f7d69d851",
+				"layer": "Entities",
+				"x": 514,
+				"y": 80,
+				"width": 20,
+				"height": 20,
+				"color": 15349948,
+				"customFields": {
+					"Flipped": true
+				}
+			}
+		],
+		"Door": [
+			{
+				"id": "Door",
+				"iid": "22e41610-73f0-11ef-bb6f-b3f1d17764d7",
+				"layer": "Entities",
+				"x": 528,
+				"y": 132,
+				"width": 24,
+				"height": 24,
+				"color": 4073265,
+				"customFields": {
+					"Level": "finish",
+					"Visible": true
+				}
+			}
+		]
+	}
+}
